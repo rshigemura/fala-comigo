@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fala Comigo">
+<meta name="theme-color" content="#6C63FF">
+<title>Fala Comigo — CAA</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  :root {
+    --purple: #6C63FF;
+    --purple-light: #EEF0FF;
+    --purple-dark: #4A43D4;
+    --teal: #00BFA5;
+    --teal-light: #E0F7F4;
+    --coral: #FF6B6B;
+    --coral-light: #FFEEEE;
+    --amber: #FFA726;
+    --amber-light: #FFF3E0;
+    --green: #66BB6A;
+    --green-light: #E8F5E9;
+    --blue: #42A5F5;
+    --blue-light: #E3F2FD;
+    --pink: #EC407A;
+    --pink-light: #FCE4EC;
+    --orange: #FF7043;
+    --orange-light: #FBE9E7;
+    --bg: #F5F6FA;
+    --card-bg: #FFFFFF;
+    --text: #2D2D3A;
+    --text-muted: #7B7B9A;
+    --radius: 20px;
+    --shadow: 0 4px 16px rgba(0,0,0,0.10);
+    --shadow-active: 0 2px 8px rgba(0,0,0,0.14);
+    --bar-height: 72px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    overflow-x: hidden;
+    user-select: none;
+  }
+
+  /* ── TOP BAR ───────────────────────── */
+  #topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--card-bg);
+    padding: 12px 16px 10px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+    display: flex; align-items: center; gap: 10px;
+  }
+  #topbar h1 {
+    font-size: 20px; font-weight: 800; color: var(--purple);
+    letter-spacing: -0.5px; flex: 1;
+  }
+  #topbar h1 span { color: var(--coral); }
+
+  /* ── SENTENCE BAR ──────────────────── */
+  #sentence-wrap {
+    background: var(--card-bg);
+    border-bottom: 1px solid #EAEAEF;
+    min-height: 68px; padding: 10px 16px;
+    display: flex; align-items: center; gap: 6px;
+    flex-wrap: wrap;
+    position: sticky; top: 60px; z-index: 90;
+  }
+  #sentence-wrap .s-chip {
+    background: var(--purple-light); color: var(--purple-dark);
+    border-radius: 12px; padding: 6px 12px; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; gap: 4px;
+    animation: popIn 0.2s ease;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  #sentence-wrap .s-placeholder {
+    color: var(--text-muted); font-size: 15px; font-style: italic;
+  }
+  #sentence-actions {
+    display: flex; gap: 8px; margin-left: auto; flex-shrink: 0;
+  }
+  .btn-round {
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .btn-round:active { transform: scale(0.90); }
+  #btn-speak { background: var(--purple); color: #fff; box-shadow: var(--shadow-active); }
+  #btn-clear { background: #EAEAEF; color: var(--text-muted); }
+
+  /* ── CATEGORY TABS ─────────────────── */
+  #cat-tabs {
+    display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px 0;
+    scrollbar-width: none;
+  }
+  #cat-tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0; border: none; cursor: pointer;
+    border-radius: 16px; padding: 8px 16px;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.18s;
+    background: var(--card-bg); color: var(--text-muted);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .tab.active { color: #fff; transform: translateY(-1px); box-shadow: var(--shadow-active); }
+  .tab-icon { font-size: 18px; }
+
+  /* ── CARDS GRID ────────────────────── */
+  #cards-section { padding: 14px 12px 100px; }
+  #cards-title { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; padding: 0 4px; }
+  #cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.14s, box-shadow 0.14s;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 12px 8px 10px;
+    position: relative;
+    border: 2.5px solid transparent;
+  }
+  .card:active { transform: scale(0.92); box-shadow: var(--shadow-active); }
+  .card.pressed { transform: scale(0.92); }
+  .card-img-wrap {
+    width: 72px; height: 72px;
+    border-radius: 14px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px; flex-shrink: 0;
+  }
+  .card-img-wrap img {
+    width: 100%; height: 100%; object-fit: contain;
+  }
+  .card-img-wrap .emoji-fallback {
+    font-size: 44px; line-height: 1;
+  }
+  .card-label {
+    font-size: 12px; font-weight: 800; text-align: center;
+    line-height: 1.25; color: var(--text);
+    word-break: break-word;
+  }
+  .card.loading .card-img-wrap { background: #F0F0F8; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+  /* ── BOTTOM NAV ────────────────────── */
+  #bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: var(--bar-height);
+    background: var(--card-bg);
+    display: flex; align-items: center; justify-content: space-around;
+    box-shadow: 0 -1px 0 rgba(0,0,0,0.07);
+    z-index: 200;
+  }
+  .nav-btn {
+    flex: 1; height: 100%; border: none; background: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; font-size: 11px; font-weight: 700; color: var(--text-muted);
+    transition: color 0.15s;
+  }
+  .nav-btn .nav-icon { font-size: 24px; }
+  .nav-btn.active { color: var(--purple); }
+
+  /* ── SETTINGS PANEL ─────────────────── */
+  #settings-panel {
+    display: none; padding: 16px; flex-direction: column; gap: 14px;
+  }
+  #settings-panel.visible { display: flex; }
+  .setting-row {
+    background: var(--card-bg); border-radius: 16px; padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .setting-row label { font-size: 15px; font-weight: 700; color: var(--text); }
+  .setting-row p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .toggle { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider-t {
+    position: absolute; cursor: pointer; inset: 0;
+    background: #D5D5E5; border-radius: 14px; transition: background 0.2s;
+  }
+  .slider-t:before {
+    content: ''; position: absolute; height: 22px; width: 22px;
+    left: 3px; bottom: 3px; background: #fff; border-radius: 50%;
+    transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .toggle input:checked + .slider-t { background: var(--purple); }
+  .toggle input:checked + .slider-t:before { transform: translateX(20px); }
+
+  .speed-row { gap: 8px; flex-direction: column; align-items: flex-start; }
+  .speed-row input[type=range] { width: 100%; accent-color: var(--purple); }
+
+  /* ── TOAST ──────────────────────────── */
+  #toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #2D2D3A; color: #fff; border-radius: 20px; padding: 10px 20px;
+    font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s; z-index: 999; white-space: nowrap;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── CATEGORY COLORS ─────────────────── */
+  [data-cat="necessidades"] .card-img-wrap { background: var(--teal-light); }
+  [data-cat="necessidades"] .card { border-color: transparent; }
+  [data-cat="necessidades"].tab.active { background: var(--teal); }
+  [data-cat="emocoes"] .card-img-wrap { background: var(--pink-light); }
+  [data-cat="emocoes"].tab.active { background: var(--pink); }
+  [data-cat="atividades"] .card-img-wrap { background: var(--amber-light); }
+  [data-cat="atividades"].tab.active { background: var(--amber); }
+  [data-cat="pessoas"] .card-img-wrap { background: var(--blue-light); }
+  [data-cat="pessoas"].tab.active { background: var(--blue); }
+  [data-cat="lugares"] .card-img-wrap { background: var(--green-light); }
+  [data-cat="lugares"].tab.active { background: var(--green); }
+
+  .card[data-cat="necessidades"] .card-img-wrap { background: var(--teal-light); }
+  .card[data-cat="emocoes"] .card-img-wrap { background: var(--pink-light); }
+  .card[data-cat="atividades"] .card-img-wrap { background: var(--amber-light); }
+  .card[data-cat="pessoas"] .card-img-wrap { background: var(--blue-light); }
+  .card[data-cat="lugares"] .card-img-wrap { background: var(--green-light); }
+  [data-cat="vestuario"] .card-img-wrap { background: var(--orange-light); }
+  [data-cat="vestuario"].tab.active { background: var(--orange); }
+  .card[data-cat="vestuario"] .card-img-wrap { background: var(--orange-light); }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Aplicativo de Comunicação Aumentativa e Alternativa — Fala Comigo</h2>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <h1>Fala <span>Comigo</span> 💬</h1>
+  <div style="font-size:12px;color:var(--text-muted);font-weight:700;">CAA</div>
+</div>
+
+<!-- SENTENCE BAR -->
+<div id="sentence-wrap">
+  <div id="sentence-chips" style="display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center;">
+    <span class="s-placeholder" id="sentence-placeholder">Toque nos cards para montar uma frase…</span>
+  </div>
+  <div id="sentence-actions">
+    <button class="btn-round" id="btn-speak" title="Falar frase" aria-label="Falar frase">🔊</button>
+    <button class="btn-round" id="btn-clear" title="Limpar" aria-label="Limpar frase">✕</button>
+  </div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div id="cat-tabs" role="tablist" aria-label="Categorias">
+  <button class="tab active" data-cat="necessidades" role="tab" aria-selected="true">
+    <span class="tab-icon">🟢</span> Necessidades
+  </button>
+  <button class="tab" data-cat="emocoes" role="tab" aria-selected="false">
+    <span class="tab-icon">💗</span> Emoções
+  </button>
+  <button class="tab" data-cat="atividades" role="tab" aria-selected="false">
+    <span class="tab-icon">⭐</span> Atividades
+  </button>
+  <button class="tab" data-cat="pessoas" role="tab" aria-selected="false">
+    <span class="tab-icon">💙</span> Pessoas
+  </button>
+  <button class="tab" data-cat="lugares" role="tab" aria-selected="false">
+    <span class="tab-icon">🟩</span> Lugares
+  </button>
+  <button class="tab" data-cat="vestuario" role="tab" aria-selected="false">
+    <span class="tab-icon">👕</span> Vestuário
+  </button>
+</div>
+
+<!-- CARDS SECTION -->
+<div id="cards-section" role="tabpanel">
+  <div id="cards-title">Necessidades Básicas</div>
+  <div id="cards-grid" aria-label="Cards de comunicação"></div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="settings-panel" role="region" aria-label="Configurações">
+  <div class="setting-row">
+    <div>
+      <label>Vibrar ao tocar</label>
+      <p>Feedback háptico nos cards</p>
+    </div>
+    <label class="toggle"><input type="checkbox" id="toggle-vibrate" checked><span class="slider-t"></span></label>
+  </div>
+  <div class="setting-row">
+    <div>
+      <label>Falar ao tocar</label>
+      <p>Voz imediata ao pressionar card</p>
+    </div>
+    <label class="toggle"><input type="checkbox" id="toggle-speak-card" checked><span class="slider-t"></span></label>
+  </div>
+  <div class="setting-row speed-row">
+    <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
+      <label>Velocidade da voz</label>
+      <span id="speed-val" style="font-size:13px;color:var(--text-muted);font-weight:700;">1.0×</span>
+    </div>
+    <input type="range" id="speed-range" min="0.5" max="1.5" step="0.1" value="1.0">
+  </div>
+  <div class="setting-row">
+    <div>
+      <label>Tom da voz</label>
+      <p>Grave ← → Agudo</p>
+    </div>
+    <input type="range" id="pitch-range" min="0.5" max="2.0" step="0.1" value="1.2" style="width:120px;accent-color:var(--purple);">
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bottom-nav" role="navigation" aria-label="Menu principal">
+  <button class="nav-btn active" id="nav-home" aria-label="Início">
+    <span class="nav-icon">🏠</span>
+    <span>Início</span>
+  </button>
+  <button class="nav-btn" id="nav-settings" aria-label="Configurações">
+    <span class="nav-icon">⚙️</span>
+    <span>Ajustes</span>
+  </button>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const ARASAAC = 'https://static.arasaac.org/pictograms/';
+
+const categories = {
+  necessidades: {
+    label: 'Necessidades Básicas',
+    items: [
+      { id: 2728,  label: 'Água',       emoji: '💧' },
+      { id: 6334,  label: 'Comida',     emoji: '🍽️' },
+      { id: 2753,  label: 'Banheiro',   emoji: '🚽' },
+      { id: 2760,  label: 'Dormir',     emoji: '😴' },
+      { id: 6140,  label: 'Dói',        emoji: '🤕' },
+      { id: 5574,  label: 'Cansado',    emoji: '😪' },
+      { id: 5589,  label: 'Quente',     emoji: '🌡️' },
+      { id: 5591,  label: 'Frio',       emoji: '🥶' },
+      { id: 2748,  label: 'Ajuda',      emoji: '🙋' },
+      { id: 6469,  label: 'Não quero',  emoji: '🙅' },
+      { id: 6467,  label: 'Quero',      emoji: '🙆' },
+      { id: 9960,  label: 'Remédio',    emoji: '💊' },
+    ]
+  },
+  emocoes: {
+    label: 'Emoções e Sentimentos',
+    items: [
+      { id: 5536,  label: 'Feliz',      emoji: '😄' },
+      { id: 5534,  label: 'Triste',     emoji: '😢' },
+      { id: 5537,  label: 'Bravo',      emoji: '😠' },
+      { id: 5538,  label: 'Assustado',  emoji: '😨' },
+      { id: 5540,  label: 'Surpreso',   emoji: '😲' },
+      { id: 5543,  label: 'Calmo',      emoji: '😌' },
+      { id: 6228,  label: 'Amor',       emoji: '❤️' },
+      { id: 5580,  label: 'Bem',        emoji: '👍' },
+      { id: 5581,  label: 'Mal',        emoji: '👎' },
+      { id: 5553,  label: 'Entediado',  emoji: '😑' },
+      { id: 9239,  label: 'Orgulhoso',  emoji: '🥹' },
+      { id: 7085,  label: 'Nervoso',    emoji: '😬' },
+    ]
+  },
+  atividades: {
+    label: 'Atividades e Rotina',
+    items: [
+      { id: 8251,  label: 'Brincar',    emoji: '🎮' },
+      { id: 5792,  label: 'Comer',      emoji: '🍴' },
+      { id: 2840,  label: 'Estudar',    emoji: '📚' },
+      { id: 7524,  label: 'Pintar',     emoji: '🎨' },
+      { id: 5842,  label: 'Música',     emoji: '🎵' },
+      { id: 2765,  label: 'Tomar banho',emoji: '🛁' },
+      { id: 2762,  label: 'Escovar dentes', emoji: '🦷' },
+      { id: 5806,  label: 'Passear',    emoji: '🚶' },
+      { id: 5822,  label: 'Assistir TV',emoji: '📺' },
+      { id: 9538,  label: 'Tablet',     emoji: '📱' },
+      { id: 5814,  label: 'Dançar',     emoji: '💃' },
+      { id: 5796,  label: 'Ler',        emoji: '📖' },
+    ]
+  },
+  pessoas: {
+    label: 'Pessoas',
+    items: [
+      { id: 5588,  label: 'Eu',         emoji: '🙋' },
+      { id: 5587,  label: 'Você',       emoji: '👉' },
+      { id: 5679,  label: 'Mãe',        emoji: '👩' },
+      { id: 5678,  label: 'Pai',        emoji: '👨' },
+      { id: 5690,  label: 'Irmão',      emoji: '👦' },
+      { id: 5691,  label: 'Irmã',       emoji: '👧' },
+      { id: 5704,  label: 'Avó',        emoji: '👵' },
+      { id: 5703,  label: 'Avô',        emoji: '👴' },
+      { id: 5714,  label: 'Amigo',      emoji: '🤝' },
+      { id: 5746,  label: 'Professor',  emoji: '👩‍🏫' },
+      { id: 6091,  label: 'Médico',     emoji: '👨‍⚕️' },
+      { id: 5752,  label: 'Todo mundo', emoji: '👥' },
+    ]
+  },
+  lugares: {
+    label: 'Lugares',
+    items: [
+      { id: 2837,  label: 'Escola',     emoji: '🏫' },
+      { id: 2826,  label: 'Casa',       emoji: '🏠' },
+      { id: 6091,  label: 'Hospital',   emoji: '🏥' },
+      { id: 5870,  label: 'Parque',     emoji: '🌳' },
+      { id: 5858,  label: 'Loja',       emoji: '🏪' },
+      { id: 5854,  label: 'Cozinha',    emoji: '🍳' },
+      { id: 5851,  label: 'Quarto',     emoji: '🛏️' },
+      { id: 5853,  label: 'Banheiro',   emoji: '🚿' },
+      { id: 6099,  label: 'Carro',      emoji: '🚗' },
+      { id: 5862,  label: 'Piscina',    emoji: '🏊' },
+      { id: 5864,  label: 'Igreja',     emoji: '⛪' },
+      { id: 5868,  label: 'Supermercado', emoji: '🛒' },
+    ]
+  },
+  vestuario: {
+    label: 'Vestuário',
+    items: [
+      { id: 6427,  label: 'Camiseta',    emoji: '👕' },
+      { id: 6428,  label: 'Calça',       emoji: '👖' },
+      { id: 6432,  label: 'Vestido',     emoji: '👗' },
+      { id: 6433,  label: 'Sapato',      emoji: '👟' },
+      { id: 6434,  label: 'Meia',        emoji: '🧦' },
+      { id: 6435,  label: 'Casaco',      emoji: '🧥' },
+      { id: 6436,  label: 'Pijama',      emoji: '🩲' },
+      { id: 6437,  label: 'Cueca',       emoji: '🩳' },
+      { id: 6438,  label: 'Chapéu',      emoji: '🧢' },
+      { id: 6439,  label: 'Luva',        emoji: '🧤' },
+      { id: 6440,  label: 'Cachecol',    emoji: '🧣' },
+      { id: 6441,  label: 'Sandália',    emoji: '🩴' },
+    ]
+  }
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentCat = 'necessidades';
+let sentence = [];
+let settings = {
+  vibrate: true,
+  speakCard: true,
+  speed: 1.0,
+  pitch: 1.2
+};
+
+// ── SPEECH ────────────────────────────────────────────────────────────────────
+let voices = [];
+window.speechSynthesis.onvoiceschanged = () => {
+  voices = window.speechSynthesis.getVoices();
+};
+
+function getBRVoice() {
+  return voices.find(v => v.lang === 'pt-BR') ||
+         voices.find(v => v.lang.startsWith('pt')) ||
+         voices[0];
+}
+
+function speak(text) {
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'pt-BR';
+  utter.rate = settings.speed;
+  utter.pitch = settings.pitch;
+  const voice = getBRVoice();
+  if (voice) utter.voice = voice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ── RENDER CARDS ─────────────────────────────────────────────────────────────
+function renderCards(cat) {
+  const grid = document.getElementById('cards-grid');
+  const title = document.getElementById('cards-title');
+  const data = categories[cat];
+  title.textContent = data.label;
+  grid.innerHTML = '';
+
+  data.items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card loading';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', item.label);
+    card.dataset.cat = cat;
+    card.dataset.label = item.label;
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'card-img-wrap';
+
+    const img = new Image();
+    const pictoUrl = `${ARASAAC}${item.id}/${item.id}_500.png`;
+    img.src = pictoUrl;
+    img.alt = item.label;
+    img.onload = () => {
+      card.classList.remove('loading');
+      imgWrap.innerHTML = '';
+      imgWrap.appendChild(img);
+    };
+    img.onerror = () => {
+      card.classList.remove('loading');
+      imgWrap.innerHTML = `<span class="emoji-fallback" aria-hidden="true">${item.emoji}</span>`;
+    };
+    imgWrap.appendChild(img);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'card-label';
+    lbl.textContent = item.label;
+
+    card.appendChild(imgWrap);
+    card.appendChild(lbl);
+    grid.appendChild(card);
+
+    function handleCardActivate() {
+      if (settings.vibrate && navigator.vibrate) navigator.vibrate(40);
+      addToSentence(item.label);
+      if (settings.speakCard) speak(item.label);
+      card.classList.add('pressed');
+      setTimeout(() => card.classList.remove('pressed'), 180);
+    }
+
+    card.addEventListener('click', handleCardActivate);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCardActivate(); }
+    });
+  });
+}
+
+// ── SENTENCE ─────────────────────────────────────────────────────────────────
+function addToSentence(word) {
+  sentence.push(word);
+  renderSentence();
+}
+
+function renderSentence() {
+  const chips = document.getElementById('sentence-chips');
+  const placeholder = document.getElementById('sentence-placeholder');
+  chips.innerHTML = '';
+  if (sentence.length === 0) {
+    chips.appendChild(placeholder);
+    return;
+  }
+  sentence.forEach((word, i) => {
+    const chip = document.createElement('span');
+    chip.className = 's-chip';
+    chip.textContent = word;
+    chip.setAttribute('role', 'button');
+    chip.setAttribute('aria-label', `Remover ${word}`);
+    chip.addEventListener('click', () => {
+      sentence.splice(i, 1);
+      renderSentence();
+    });
+    chips.appendChild(chip);
+  });
+}
+
+document.getElementById('btn-speak').addEventListener('click', () => {
+  if (sentence.length === 0) { showToast('Adicione palavras para falar!'); return; }
+  speak(sentence.join(' '));
+  if (settings.vibrate && navigator.vibrate) navigator.vibrate([30, 20, 30]);
+});
+
+document.getElementById('btn-clear').addEventListener('click', () => {
+  sentence = [];
+  renderSentence();
+  showToast('Frase apagada');
+});
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    currentCat = tab.dataset.cat;
+    renderCards(currentCat);
+    document.getElementById('cards-section').scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ── BOTTOM NAV ────────────────────────────────────────────────────────────────
+document.getElementById('nav-home').addEventListener('click', () => {
+  document.getElementById('nav-home').classList.add('active');
+  document.getElementById('nav-settings').classList.remove('active');
+  document.getElementById('cards-section').style.display = '';
+  document.getElementById('cat-tabs').style.display = '';
+  document.getElementById('settings-panel').classList.remove('visible');
+});
+
+document.getElementById('nav-settings').addEventListener('click', () => {
+  document.getElementById('nav-settings').classList.add('active');
+  document.getElementById('nav-home').classList.remove('active');
+  document.getElementById('cards-section').style.display = 'none';
+  document.getElementById('cat-tabs').style.display = 'none';
+  document.getElementById('settings-panel').classList.add('visible');
+});
+
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+document.getElementById('toggle-vibrate').addEventListener('change', e => {
+  settings.vibrate = e.target.checked;
+});
+document.getElementById('toggle-speak-card').addEventListener('change', e => {
+  settings.speakCard = e.target.checked;
+});
+document.getElementById('speed-range').addEventListener('input', e => {
+  settings.speed = parseFloat(e.target.value);
+  document.getElementById('speed-val').textContent = settings.speed.toFixed(1) + '×';
+});
+document.getElementById('pitch-range').addEventListener('input', e => {
+  settings.pitch = parseFloat(e.target.value);
+});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── SERVICE WORKER ─────────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderCards('necessidades');
+// Pre-load voices
+setTimeout(() => { voices = window.speechSynthesis.getVoices(); }, 500);
+</script>
+</body>
+</html>
