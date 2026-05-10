@@ -295,14 +295,6 @@
 <div id="settings-panel" role="region" aria-label="Configurações">
   <div class="setting-row">
     <div>
-      <label>Vibrar ao tocar</label>
-      <p>Feedback háptico nos cards</p>
-      <p id="vibrate-ios-warning" style="display:none;color:#e05a5a;font-size:11px;margin-top:2px;">⚠️ Não disponível no iOS</p>
-    </div>
-    <label class="toggle"><input type="checkbox" id="toggle-vibrate" checked><span class="slider-t"></span></label>
-  </div>
-  <div class="setting-row">
-    <div>
       <label>Falar ao tocar</label>
       <p>Voz imediata ao pressionar card</p>
     </div>
@@ -448,13 +440,9 @@ const categories = {
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-if (isIOS) document.getElementById('vibrate-ios-warning').style.display = 'block';
-
 let currentCat = 'necessidades';
 let sentence = [];
 let settings = {
-  vibrate: true,
   speakCard: true,
   speed: 1.0,
   pitch: 1.2
@@ -527,18 +515,6 @@ function renderCards(cat) {
     grid.appendChild(card);
 
     function handleCardActivate() {
-      if (settings.vibrate) {
-        if (navigator.vibrate) {
-          navigator.vibrate(40);
-          if (!window._vibrateConfirmed) {
-            window._vibrateConfirmed = true;
-            showToast('Vibração ativa ✓');
-          }
-        } else if (!window._vibrateUnavailable) {
-          window._vibrateUnavailable = true;
-          showToast('Vibração não suportada neste dispositivo');
-        }
-      }
       addToSentence(item.label);
       if (settings.speakCard) speak(item.label);
       card.classList.add('pressed');
@@ -583,7 +559,6 @@ function renderSentence() {
 document.getElementById('btn-speak').addEventListener('click', () => {
   if (sentence.length === 0) { showToast('Adicione palavras para falar!'); return; }
   speak(sentence.join(' '));
-  if (settings.vibrate && navigator.vibrate) navigator.vibrate([30, 20, 30]);
 });
 
 document.getElementById('btn-clear').addEventListener('click', () => {
@@ -626,9 +601,6 @@ document.getElementById('nav-settings').addEventListener('click', () => {
 });
 
 // ── SETTINGS ─────────────────────────────────────────────────────────────────
-document.getElementById('toggle-vibrate').addEventListener('change', e => {
-  settings.vibrate = e.target.checked;
-});
 document.getElementById('toggle-speak-card').addEventListener('change', e => {
   settings.speakCard = e.target.checked;
 });
