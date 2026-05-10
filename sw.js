@@ -1,5 +1,5 @@
-const CACHE = 'fala-comigo-v1';
-const ASSETS = [
+const CACHE_VERSION = 'fala-comigo-v2';
+const APP_ASSETS = [
   './',
   './index.html',
   './manifest.json',
@@ -8,24 +8,29 @@ const ASSETS = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE_VERSION)
+      .then(c => c.addAll(APP_ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
-  // Cache pictogramas ARASAAC
+
+  // Cache-first para pictogramas ARASAAC (imagens externas que não mudam)
   if (url.hostname === 'static.arasaac.org') {
     e.respondWith(
-      caches.open(CACHE).then(async cache => {
+      caches.open(CACHE_VERSION).then(async cache => {
         const cached = await cache.match(e.request);
         if (cached) return cached;
         try {
@@ -39,8 +44,17 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  // Cache first para assets locais
+
+  // Network-first para assets do app (garante versão mais recente)
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    fetch(e.request)
+      .then(resp => {
+        if (resp.ok) {
+          const clone = resp.clone();
+          caches.open(CACHE_VERSION).then(c => c.put(e.request, clone));
+        }
+        return resp;
+      })
+      .catch(() => caches.match(e.request))
   );
 });

@@ -633,9 +633,23 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// ── SERVICE WORKER ─────────────────────────────────────────────────────────────
+// ── SERVICE WORKER + AUTO-UPDATE ──────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    // Verifica atualizações a cada vez que a página fica visível
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') reg.update();
+    });
+  }).catch(() => {});
+
+  // Quando um novo SW assume o controle, recarrega silenciosamente
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    showToast('Atualizando para nova versão…');
+    setTimeout(() => location.reload(), 1200);
+  });
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
