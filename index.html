@@ -297,6 +297,7 @@
     <div>
       <label>Vibrar ao tocar</label>
       <p>Feedback háptico nos cards</p>
+      <p id="vibrate-ios-warning" style="display:none;color:#e05a5a;font-size:11px;margin-top:2px;">⚠️ Não disponível no iOS</p>
     </div>
     <label class="toggle"><input type="checkbox" id="toggle-vibrate" checked><span class="slider-t"></span></label>
   </div>
@@ -447,6 +448,9 @@ const categories = {
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (isIOS) document.getElementById('vibrate-ios-warning').style.display = 'block';
+
 let currentCat = 'necessidades';
 let sentence = [];
 let settings = {
@@ -523,7 +527,18 @@ function renderCards(cat) {
     grid.appendChild(card);
 
     function handleCardActivate() {
-      if (settings.vibrate && navigator.vibrate) navigator.vibrate(40);
+      if (settings.vibrate) {
+        if (navigator.vibrate) {
+          navigator.vibrate(40);
+          if (!window._vibrateConfirmed) {
+            window._vibrateConfirmed = true;
+            showToast('Vibração ativa ✓');
+          }
+        } else if (!window._vibrateUnavailable) {
+          window._vibrateUnavailable = true;
+          showToast('Vibração não suportada neste dispositivo');
+        }
+      }
       addToSentence(item.label);
       if (settings.speakCard) speak(item.label);
       card.classList.add('pressed');
