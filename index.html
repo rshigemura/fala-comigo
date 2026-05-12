@@ -11,287 +11,339 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-  :root {
-    --purple: #6C63FF;
-    --purple-light: #EEF0FF;
-    --purple-dark: #4A43D4;
-    --teal: #00BFA5;
-    --teal-light: #E0F7F4;
-    --coral: #FF6B6B;
-    --coral-light: #FFEEEE;
-    --amber: #FFA726;
-    --amber-light: #FFF3E0;
-    --green: #66BB6A;
-    --green-light: #E8F5E9;
-    --blue: #42A5F5;
-    --blue-light: #E3F2FD;
-    --pink: #EC407A;
-    --pink-light: #FCE4EC;
-    --orange: #FF7043;
-    --orange-light: #FBE9E7;
-    --bg: #F5F6FA;
-    --card-bg: #FFFFFF;
-    --text: #2D2D3A;
-    --text-muted: #7B7B9A;
-    --radius: 20px;
-    --shadow: 0 4px 16px rgba(0,0,0,0.10);
-    --shadow-active: 0 2px 8px rgba(0,0,0,0.14);
-    --bar-height: 72px;
-  }
+:root {
+  --purple: #6C63FF; --purple-light: #EEF0FF; --purple-dark: #4A43D4;
+  --teal: #00BFA5; --teal-light: #E0F7F4;
+  --coral: #FF6B6B; --coral-light: #FFEEEE;
+  --amber: #FFA726; --amber-light: #FFF3E0;
+  --green: #66BB6A; --green-light: #E8F5E9;
+  --blue: #42A5F5; --blue-light: #E3F2FD;
+  --pink: #EC407A; --pink-light: #FCE4EC;
+  --orange: #FF7043; --orange-light: #FBE9E7;
+  --bg: #F5F6FA; --card-bg: #FFFFFF;
+  --text: #2D2D3A; --text-muted: #7B7B9A;
+  --radius: 20px;
+  --shadow: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-active: 0 2px 8px rgba(0,0,0,0.14);
+  --bar-height: 72px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100dvh; overflow-x: hidden; user-select: none;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* ── TOP BAR ── */
+#topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--card-bg); padding: 12px 16px 10px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+  display: flex; align-items: center; gap: 10px;
+}
+#topbar h1 { font-size: 20px; font-weight: 800; color: var(--purple); letter-spacing: -0.5px; flex: 1; }
+#topbar h1 span { color: var(--coral); }
+#btn-edit {
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; padding: 6px 8px; border-radius: 12px;
+  transition: background 0.15s; line-height: 1; font-family: inherit;
+  font-weight: 800; color: var(--text-muted); font-size: 13px;
+  display: flex; align-items: center; gap: 4px;
+}
+#btn-edit.active { background: var(--amber-light); color: var(--amber); }
 
-  body {
-    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100dvh;
-    overflow-x: hidden;
-    user-select: none;
-  }
+/* ── SENTENCE BAR ── */
+#sentence-wrap {
+  background: var(--card-bg); border-bottom: 1px solid #EAEAEF;
+  min-height: 68px; padding: 10px 16px;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  position: sticky; top: 60px; z-index: 90;
+}
+.s-chip {
+  background: var(--purple-light); color: var(--purple-dark);
+  border-radius: 12px; padding: 6px 12px; font-size: 15px; font-weight: 700;
+  display: flex; align-items: center; gap: 4px; animation: popIn 0.2s ease;
+  cursor: pointer;
+}
+@keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.s-placeholder { color: var(--text-muted); font-size: 15px; font-style: italic; }
+#sentence-actions { display: flex; gap: 8px; margin-left: auto; flex-shrink: 0; }
+.btn-round {
+  width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.btn-round:active { transform: scale(0.90); }
+#btn-speak { background: var(--purple); color: #fff; box-shadow: var(--shadow-active); }
+#btn-clear { background: #EAEAEF; color: var(--text-muted); }
 
-  /* ── TOP BAR ───────────────────────── */
-  #topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--card-bg);
-    padding: 12px 16px 10px;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.07);
-    display: flex; align-items: center; gap: 10px;
-  }
-  #topbar h1 {
-    font-size: 20px; font-weight: 800; color: var(--purple);
-    letter-spacing: -0.5px; flex: 1;
-  }
-  #topbar h1 span { color: var(--coral); }
+/* ── CATEGORY TABS ── */
+#cat-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; padding: 12px 12px 0;
+}
+.tab {
+  border: none; cursor: pointer; border-radius: 16px; padding: 10px 4px;
+  font-size: 12px; font-weight: 800;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: transform 0.18s, box-shadow 0.18s;
+  background: var(--card-bg); color: var(--text-muted);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  line-height: 1.2; position: relative; font-family: inherit;
+}
+.tab.active { color: #fff; transform: translateY(-2px); box-shadow: var(--shadow-active); }
+.tab-icon { font-size: 24px; }
 
-  /* ── SENTENCE BAR ──────────────────── */
-  #sentence-wrap {
-    background: var(--card-bg);
-    border-bottom: 1px solid #EAEAEF;
-    min-height: 68px; padding: 10px 16px;
-    display: flex; align-items: center; gap: 6px;
-    flex-wrap: wrap;
-    position: sticky; top: 60px; z-index: 90;
-  }
-  #sentence-wrap .s-chip {
-    background: var(--purple-light); color: var(--purple-dark);
-    border-radius: 12px; padding: 6px 12px; font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; gap: 4px;
-    animation: popIn 0.2s ease;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-  }
-  #sentence-wrap .s-placeholder {
-    color: var(--text-muted); font-size: 15px; font-style: italic;
-  }
-  #sentence-actions {
-    display: flex; gap: 8px; margin-left: auto; flex-shrink: 0;
-  }
-  .btn-round {
-    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; font-size: 18px;
-    transition: transform 0.12s, box-shadow 0.12s;
-  }
-  .btn-round:active { transform: scale(0.90); }
-  #btn-speak { background: var(--purple); color: #fff; box-shadow: var(--shadow-active); }
-  #btn-clear { background: #EAEAEF; color: var(--text-muted); }
+/* Tab edit controls */
+.tab-ctrl {
+  display: none; position: absolute; width: 20px; height: 20px;
+  border-radius: 50%; border: none; cursor: pointer;
+  align-items: center; justify-content: center;
+  font-size: 10px; z-index: 5; font-family: inherit;
+}
+body.edit-mode .tab-ctrl { display: flex; }
+.tab-ctrl.edit-cat { top: -7px; right: -7px; background: var(--purple); color: #fff; }
+.tab-ctrl.del-cat  { top: -7px; left: -7px;  background: var(--coral);  color: #fff; }
+.tab-add {
+  border: 2px dashed #C5C5D8 !important; background: var(--bg) !important;
+  color: var(--text-muted) !important; box-shadow: none !important;
+  display: none !important;
+}
+body.edit-mode .tab-add { display: flex !important; }
 
-  /* ── CATEGORY GRID ─────────────────── */
-  #cat-tabs {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding: 12px 12px 0;
-  }
-  .tab {
-    border: none; cursor: pointer;
-    border-radius: 16px; padding: 10px 4px;
-    font-size: 12px; font-weight: 800;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    transition: all 0.18s;
-    background: var(--card-bg); color: var(--text-muted);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-    line-height: 1.2;
-  }
-  .tab.active { color: #fff; transform: translateY(-2px); box-shadow: var(--shadow-active); }
-  .tab-icon { font-size: 24px; }
+/* ── CARDS SECTION ── */
+#cards-section { padding: 14px 12px 100px; }
+#cards-title { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; padding: 0 4px; }
+#cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
-  /* ── CARDS GRID ────────────────────── */
-  #cards-section { padding: 14px 12px 100px; }
-  #cards-title { font-size: 13px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; padding: 0 4px; }
-  #cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
+.card {
+  background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow: hidden; cursor: pointer;
+  transition: transform 0.14s, box-shadow 0.14s;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 12px 8px 10px; position: relative; border: 2.5px solid transparent;
+}
+.card:active { transform: scale(0.92); box-shadow: var(--shadow-active); }
+.card.pressed { transform: scale(0.92); }
+body.edit-mode .card { cursor: default; }
+body.edit-mode .card:active { transform: none; box-shadow: var(--shadow); }
+body.edit-mode .card.pressed { transform: none; }
 
-  .card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.14s, box-shadow 0.14s;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 12px 8px 10px;
-    position: relative;
-    border: 2.5px solid transparent;
-  }
-  .card:active { transform: scale(0.92); box-shadow: var(--shadow-active); }
-  .card.pressed { transform: scale(0.92); }
-  .card-img-wrap {
-    width: 72px; height: 72px;
-    border-radius: 14px; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px; flex-shrink: 0;
-  }
-  .card-img-wrap img {
-    width: 100%; height: 100%; object-fit: contain;
-  }
-  .card-img-wrap .emoji-fallback {
-    font-size: 44px; line-height: 1;
-  }
-  .card-label {
-    font-size: 12px; font-weight: 800; text-align: center;
-    line-height: 1.25; color: var(--text);
-    word-break: break-word;
-  }
-  .card.loading .card-img-wrap { background: #F0F0F8; animation: pulse 1.2s infinite; }
-  @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+.card-img-wrap {
+  width: 72px; height: 72px; border-radius: 14px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 8px; flex-shrink: 0;
+}
+.card-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.card-img-wrap .emoji-fallback { font-size: 44px; line-height: 1; }
+.card-label { font-size: 12px; font-weight: 800; text-align: center; line-height: 1.25; color: var(--text); word-break: break-word; }
+.card.loading .card-img-wrap { background: #F0F0F8 !important; animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-  /* ── BOTTOM NAV ────────────────────── */
-  #bottom-nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: var(--bar-height);
-    background: var(--card-bg);
-    display: flex; align-items: center; justify-content: space-around;
-    box-shadow: 0 -1px 0 rgba(0,0,0,0.07);
-    z-index: 200;
-  }
-  .nav-btn {
-    flex: 1; height: 100%; border: none; background: none; cursor: pointer;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 3px; font-size: 11px; font-weight: 700; color: var(--text-muted);
-    transition: color 0.15s;
-  }
-  .nav-btn .nav-icon { font-size: 24px; }
-  .nav-btn.active { color: var(--purple); }
+/* Edit overlay */
+.card-edit-overlay {
+  display: none; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.90); border-radius: calc(var(--radius) - 2px);
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 5px; z-index: 10;
+}
+body.edit-mode .card-edit-overlay { display: flex; }
+.eov-btn {
+  border: none; border-radius: 10px; cursor: pointer;
+  font-size: 11px; font-weight: 800; padding: 5px 10px;
+  display: flex; align-items: center; gap: 3px; font-family: inherit;
+  white-space: nowrap;
+}
+.eov-btn.eov-edit { background: var(--purple-light); color: var(--purple-dark); }
+.eov-btn.eov-move { background: var(--blue-light);   color: var(--blue); }
+.eov-btn.eov-del  { background: var(--coral-light);  color: var(--coral); }
 
-  /* ── SETTINGS PANEL ─────────────────── */
-  #settings-panel {
-    display: none; padding: 16px; flex-direction: column; gap: 14px;
-  }
-  #settings-panel.visible { display: flex; }
-  .setting-row {
-    background: var(--card-bg); border-radius: 16px; padding: 14px 16px;
-    display: flex; align-items: center; justify-content: space-between;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .setting-row label { font-size: 15px; font-weight: 700; color: var(--text); }
-  .setting-row p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .toggle { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .slider-t {
-    position: absolute; cursor: pointer; inset: 0;
-    background: #D5D5E5; border-radius: 14px; transition: background 0.2s;
-  }
-  .slider-t:before {
-    content: ''; position: absolute; height: 22px; width: 22px;
-    left: 3px; bottom: 3px; background: #fff; border-radius: 50%;
-    transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-  .toggle input:checked + .slider-t { background: var(--purple); }
-  .toggle input:checked + .slider-t:before { transform: translateX(20px); }
+/* Drag visual */
+.card.dragging  { opacity: 0.35; transform: scale(0.95); }
+.card.drag-over { outline: 3px solid var(--purple); outline-offset: 2px; }
 
-  .speed-row { gap: 8px; flex-direction: column; align-items: flex-start; }
-  .speed-row input[type=range] { width: 100%; accent-color: var(--purple); }
+/* Add card tile */
+.card-add {
+  background: var(--bg); border: 2.5px dashed #C5C5D8; border-radius: var(--radius);
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; cursor: pointer; min-height: 120px;
+  color: var(--text-muted); font-size: 13px; font-weight: 800;
+  font-family: inherit; transition: border-color 0.15s, background 0.15s, color 0.15s;
+  border: 2.5px dashed #C5C5D8;
+}
+.card-add:hover { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+body.edit-mode .card-add { display: flex; }
 
-  /* ── TOAST ──────────────────────────── */
-  #toast {
-    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: #2D2D3A; color: #fff; border-radius: 20px; padding: 10px 20px;
-    font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none;
-    transition: opacity 0.2s, transform 0.2s; z-index: 999; white-space: nowrap;
-  }
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* ── BOTTOM NAV ── */
+#bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; height: var(--bar-height);
+  background: var(--card-bg); display: flex; align-items: center; justify-content: space-around;
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.07); z-index: 200;
+}
+.nav-btn {
+  flex: 1; height: 100%; border: none; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; font-size: 11px; font-weight: 700; color: var(--text-muted); transition: color 0.15s;
+}
+.nav-btn .nav-icon { font-size: 24px; }
+.nav-btn.active { color: var(--purple); }
 
-  /* ── CATEGORY COLORS ─────────────────── */
-  [data-cat="necessidades"] .card-img-wrap { background: var(--teal-light); }
-  [data-cat="necessidades"] .card { border-color: transparent; }
-  [data-cat="necessidades"].tab.active { background: var(--teal); }
-  [data-cat="emocoes"] .card-img-wrap { background: var(--pink-light); }
-  [data-cat="emocoes"].tab.active { background: var(--pink); }
-  [data-cat="atividades"] .card-img-wrap { background: var(--amber-light); }
-  [data-cat="atividades"].tab.active { background: var(--amber); }
-  [data-cat="pessoas"] .card-img-wrap { background: var(--blue-light); }
-  [data-cat="pessoas"].tab.active { background: var(--blue); }
-  [data-cat="lugares"] .card-img-wrap { background: var(--green-light); }
-  [data-cat="lugares"].tab.active { background: var(--green); }
+/* ── SETTINGS PANEL ── */
+#settings-panel { display: none; padding: 16px; flex-direction: column; gap: 14px; }
+#settings-panel.visible { display: flex; }
+.setting-row {
+  background: var(--card-bg); border-radius: 16px; padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.setting-row label { font-size: 15px; font-weight: 700; color: var(--text); }
+.setting-row p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.toggle { position: relative; width: 48px; height: 28px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider-t {
+  position: absolute; cursor: pointer; inset: 0;
+  background: #D5D5E5; border-radius: 14px; transition: background 0.2s;
+}
+.slider-t:before {
+  content: ''; position: absolute; height: 22px; width: 22px;
+  left: 3px; bottom: 3px; background: #fff; border-radius: 50%;
+  transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle input:checked + .slider-t { background: var(--purple); }
+.toggle input:checked + .slider-t:before { transform: translateX(20px); }
+.speed-row { gap: 8px; flex-direction: column; align-items: flex-start; }
+.speed-row input[type=range] { width: 100%; accent-color: var(--purple); }
 
-  .card[data-cat="necessidades"] .card-img-wrap { background: var(--teal-light); }
-  .card[data-cat="emocoes"] .card-img-wrap { background: var(--pink-light); }
-  .card[data-cat="atividades"] .card-img-wrap { background: var(--amber-light); }
-  .card[data-cat="pessoas"] .card-img-wrap { background: var(--blue-light); }
-  .card[data-cat="lugares"] .card-img-wrap { background: var(--green-light); }
-  [data-cat="vestuario"] .card-img-wrap { background: var(--orange-light); }
-  [data-cat="vestuario"].tab.active { background: var(--orange); }
-  .card[data-cat="vestuario"] .card-img-wrap { background: var(--orange-light); }
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #2D2D3A; color: #fff; border-radius: 20px; padding: 10px 20px;
+  font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 999; white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── MODAL ── */
+#modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.45); align-items: flex-end; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal-box {
+  background: var(--card-bg); border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 480px; padding: 20px 20px 36px;
+  max-height: 88dvh; overflow-y: auto; animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-handle { width: 40px; height: 4px; border-radius: 2px; background: #D5D5E5; margin: 0 auto 18px; }
+.modal-title { font-size: 18px; font-weight: 900; color: var(--text); margin-bottom: 16px; }
+.modal-field { margin-bottom: 14px; }
+.modal-lbl {
+  display: block; font-size: 12px; font-weight: 800; color: var(--text-muted);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px;
+}
+.modal-input {
+  width: 100%; border: 2px solid #EAEAEF; border-radius: 12px;
+  padding: 10px 14px; font-size: 15px; font-weight: 700; color: var(--text);
+  outline: none; font-family: inherit; transition: border-color 0.15s; background: var(--card-bg);
+}
+.modal-input:focus { border-color: var(--purple); }
+.modal-input.w-auto { width: auto; }
+
+/* Image source switcher */
+.img-src-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.img-src-tab {
+  flex: 1; padding: 8px 4px; border: 2px solid #EAEAEF; border-radius: 10px;
+  font-size: 11px; font-weight: 800; background: none; cursor: pointer;
+  color: var(--text-muted); font-family: inherit; transition: all 0.15s;
+}
+.img-src-tab.active { border-color: var(--purple); background: var(--purple-light); color: var(--purple-dark); }
+.img-src-panel { display: none; }
+.img-src-panel.active { display: block; }
+
+.img-preview-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.img-preview {
+  width: 72px; height: 72px; border-radius: 14px; border: 2px solid #EAEAEF;
+  background: var(--bg); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; overflow: hidden;
+}
+.img-preview img { width: 100%; height: 100%; object-fit: contain; }
+.img-preview-hint { font-size: 12px; color: var(--text-muted); font-weight: 700; line-height: 1.5; }
+
+.file-upload-area {
+  display: block; border: 2px dashed #C5C5D8; border-radius: 12px;
+  padding: 18px; text-align: center; cursor: pointer;
+  color: var(--text-muted); font-weight: 800; font-size: 13px;
+  transition: all 0.15s;
+}
+.file-upload-area:hover { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+.file-upload-area input[type=file] { display: none; }
+
+/* Color palette */
+.color-palette { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.color-swatch {
+  width: 34px; height: 34px; border-radius: 50%; border: 3px solid transparent;
+  cursor: pointer; transition: transform 0.15s, border-color 0.15s;
+}
+.color-swatch.selected { border-color: var(--text); transform: scale(1.2); }
+
+/* Category options for move modal */
+.cat-opt {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+  border-radius: 14px; cursor: pointer; margin-bottom: 6px;
+  border: 2px solid #EAEAEF; font-size: 15px; font-weight: 700; transition: all 0.15s;
+}
+.cat-opt:last-child { margin-bottom: 0; }
+.cat-opt.selected { border-color: var(--purple); background: var(--purple-light); color: var(--purple-dark); }
+.cat-opt-icon { font-size: 22px; flex-shrink: 0; }
+
+/* Modal actions */
+.modal-actions { display: flex; gap: 8px; margin-top: 8px; }
+.btn-mp {
+  flex: 1; padding: 13px; border: none; border-radius: 14px;
+  background: var(--purple); color: #fff;
+  font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
+}
+.btn-ms {
+  padding: 13px 18px; border: 2px solid #EAEAEF; border-radius: 14px;
+  background: none; color: var(--text-muted);
+  font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
+}
+.btn-md {
+  flex: 1; padding: 13px; border: none; border-radius: 14px;
+  background: var(--coral-light); color: var(--coral);
+  font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Aplicativo de Comunicação Aumentativa e Alternativa — Fala Comigo</h2>
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Aplicativo de Comunicação Aumentativa e Alternativa — Fala Comigo</h2>
 
-<!-- TOP BAR -->
 <div id="topbar">
   <h1>Fala <span>Comigo</span> 💬</h1>
   <div style="font-size:12px;color:var(--text-muted);font-weight:700;">CAA</div>
+  <button id="btn-edit" title="Modo edição" aria-label="Ativar modo edição">✏️ Editar</button>
 </div>
 
-<!-- SENTENCE BAR -->
 <div id="sentence-wrap">
-  <div id="sentence-chips" style="display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center;">
-    <span class="s-placeholder" id="sentence-placeholder">Toque nos cards para montar uma frase…</span>
-  </div>
+  <div id="sentence-chips" style="display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center;"></div>
   <div id="sentence-actions">
     <button class="btn-round" id="btn-speak" title="Falar frase" aria-label="Falar frase">🔊</button>
     <button class="btn-round" id="btn-clear" title="Limpar" aria-label="Limpar frase">✕</button>
   </div>
 </div>
 
-<!-- CATEGORY TABS -->
-<div id="cat-tabs" role="tablist" aria-label="Categorias">
-  <button class="tab active" data-cat="necessidades" role="tab" aria-selected="true">
-    <span class="tab-icon">🟢</span> Necessidades
-  </button>
-  <button class="tab" data-cat="emocoes" role="tab" aria-selected="false">
-    <span class="tab-icon">💗</span> Emoções
-  </button>
-  <button class="tab" data-cat="atividades" role="tab" aria-selected="false">
-    <span class="tab-icon">⭐</span> Atividades
-  </button>
-  <button class="tab" data-cat="pessoas" role="tab" aria-selected="false">
-    <span class="tab-icon">💙</span> Pessoas
-  </button>
-  <button class="tab" data-cat="lugares" role="tab" aria-selected="false">
-    <span class="tab-icon">🟩</span> Lugares
-  </button>
-  <button class="tab" data-cat="vestuario" role="tab" aria-selected="false">
-    <span class="tab-icon">👕</span> Vestuário
-  </button>
-</div>
+<div id="cat-tabs" role="tablist" aria-label="Categorias"></div>
 
-<!-- CARDS SECTION -->
 <div id="cards-section" role="tabpanel">
-  <div id="cards-title">Necessidades Básicas</div>
+  <div id="cards-title"></div>
   <div id="cards-grid" aria-label="Cards de comunicação"></div>
 </div>
 
-<!-- SETTINGS PANEL -->
 <div id="settings-panel" role="region" aria-label="Configurações">
   <div class="setting-row">
     <div>
@@ -314,255 +366,434 @@
     </div>
     <input type="range" id="pitch-range" min="0.5" max="2.0" step="0.1" value="1.2" style="width:120px;accent-color:var(--purple);">
   </div>
+  <div class="setting-row" style="cursor:pointer;" id="btn-reset-data">
+    <div>
+      <label style="cursor:pointer;">Restaurar dados padrão</label>
+      <p>Remove todas as personalizações</p>
+    </div>
+    <span style="font-size:20px;">🔄</span>
+  </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <div id="bottom-nav" role="navigation" aria-label="Menu principal">
   <button class="nav-btn active" id="nav-home" aria-label="Início">
-    <span class="nav-icon">🏠</span>
-    <span>Início</span>
+    <span class="nav-icon">🏠</span><span>Início</span>
   </button>
   <button class="nav-btn" id="nav-settings" aria-label="Configurações">
-    <span class="nav-icon">⚙️</span>
-    <span>Ajustes</span>
+    <span class="nav-icon">⚙️</span><span>Ajustes</span>
   </button>
 </div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
+<div id="modal-overlay" role="dialog" aria-modal="true">
+  <div id="modal-box"></div>
+</div>
+
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────────
+// ── CONSTANTS ──────────────────────────────────────────────────────────────────
 const ARASAAC = 'https://static.arasaac.org/pictograms/';
+const DATA_KEY = 'falaComigoData';
 
-const categories = {
-  necessidades: {
-    label: 'Necessidades Básicas',
-    items: [
-      { id: 32464, label: 'Água',       emoji: '💧' },
-      { id: 4611,  label: 'Comida',     emoji: '🍽️' },
-      { id: 38625, label: 'Banheiro',   emoji: '🚽' },
-      { id: 6479,  label: 'Dormir',     emoji: '😴' },
-      { id: 2367,  label: 'Dói',        emoji: '🤕' },
-      { id: 35537, label: 'Cansado',    emoji: '😪' },
-      { id: 4583,  label: 'Quente',     emoji: '🌡️' },
-      { id: 4652,  label: 'Frio',       emoji: '🥶' },
-      { id: 12252, label: 'Ajuda',             emoji: '🙋' },
-      { id: 29129, label: 'Não quero',         emoji: '🙅' },
-      { id: 5441,  label: 'Quero',             emoji: '🙆' },
-      { id: 8163,  label: 'Remédio',           emoji: '💊' },
-      { id: 5584,  label: 'Sim',               emoji: '✅' },
-      { id: 5526,  label: 'Não',               emoji: '❌' },
-      { id: 16713, label: 'Xixi',              emoji: '🚽' },
-      { id: 8050,  label: 'Cocô',              emoji: '💩' },
-      { id: 6058,  label: 'Banho',             emoji: '🛁' },
-      { id: 6971,  label: 'Escovar os Dentes', emoji: '🦷' },
-      { id: 8975,  label: 'Lavar as Mãos',     emoji: '🧼' },
-      { id: 6952,  label: 'Estou com Calor',   emoji: '🌡️' },
-      { id: 35583, label: 'Estou com Frio',    emoji: '🥶' },
-    ]
-  },
-  emocoes: {
-    label: 'Emoções e Sentimentos',
-    items: [
-      { id: 35547, label: 'Feliz',      emoji: '😄' },
-      { id: 35545, label: 'Triste',     emoji: '😢' },
-      { id: 35539, label: 'Bravo',      emoji: '😠' },
-      { id: 35535, label: 'Assustado',  emoji: '😨' },
-      { id: 10261, label: 'Medo',       emoji: '😨' },
-      { id: 31310, label: 'Calmo',      emoji: '😌' },
-      { id: 8020,  label: 'Amor',       emoji: '❤️' },
-      { id: 5397,  label: 'Bem',        emoji: '👍' },
-      { id: 5504,  label: 'Mal',        emoji: '👎' },
-      { id: 35531, label: 'Entediado',  emoji: '😑' },
-      { id: 31408, label: 'Orgulhoso',  emoji: '🥹' },
-      { id: 30391, label: 'Nervoso',    emoji: '😬' },
-      { id: 11178, label: 'Carinho',    emoji: '🥰' },
-      { id: 4550,  label: 'Abraço',     emoji: '🤗' },
-      { id: 2369,  label: 'Sono',       emoji: '😴' },
-      { id: 2314,  label: 'Cansado',    emoji: '😪' },
-      { id: 35571, label: 'Susto',      emoji: '😱' },
-      { id: 2464,  label: 'Enjoado',    emoji: '🤢' },
-      { id: 38945, label: 'Barulho',    emoji: '🔊' },
-    ]
-  },
-  atividades: {
-    label: 'Atividades e Rotina',
-    items: [
-      { id: 23392, label: 'Brincar',    emoji: '🎮' },
-      { id: 6456,  label: 'Comer',      emoji: '🍴' },
-      { id: 6495,  label: 'Estudar',    emoji: '📚' },
-      { id: 2348,  label: 'Pintar',     emoji: '🎨' },
-      { id: 24791, label: 'Música',     emoji: '🎵' },
-      { id: 38587, label: 'Tomar banho',emoji: '🛁' },
-      { id: 5425,  label: 'Escovar dentes', emoji: '🦷' },
-      { id: 29951, label: 'Passear',    emoji: '🚶' },
-      { id: 25498, label: 'Assistir TV',emoji: '📺' },
-      { id: 28099, label: 'Tablet',     emoji: '📱' },
-      { id: 35747, label: 'Dançar',     emoji: '💃' },
-      { id: 7141,  label: 'Ler',        emoji: '📖' },
-    ]
-  },
-  pessoas: {
-    label: 'Pessoas',
-    items: [
-      { id: 6632,  label: 'Eu',         emoji: '🙋' },
-      { id: 6625,  label: 'Você',       emoji: '👉' },
-      { id: 2458,  label: 'Mãe',        emoji: '👩' },
-      { id: 2497,  label: 'Pai',        emoji: '👨' },
-      { id: 2423,  label: 'Irmão',      emoji: '👦' },
-      { id: 2422,  label: 'Irmã',       emoji: '👧' },
-      { id: 23710, label: 'Avó',        emoji: '👵' },
-      { id: 23718, label: 'Avô',        emoji: '👴' },
-      { id: 25790, label: 'Amigo',      emoji: '🤝' },
-      { id: 6556,  label: 'Professor',  emoji: '👩‍🏫' },
-      { id: 6561,  label: 'Médico',     emoji: '👨‍⚕️' },
-      { id: 5596,  label: 'Todo mundo', emoji: '👥' },
-    ]
-  },
-  lugares: {
-    label: 'Lugares',
-    items: [
-      { id: 32446, label: 'Escola',     emoji: '🏫' },
-      { id: 6964,  label: 'Casa',       emoji: '🏠' },
-      { id: 36210, label: 'Hospital',   emoji: '🏥' },
-      { id: 5939,  label: 'Parque',     emoji: '🌳' },
-      { id: 35695, label: 'Loja',       emoji: '🏪' },
-      { id: 25966, label: 'Cozinha',    emoji: '🍳' },
-      { id: 5988,  label: 'Quarto',     emoji: '🛏️' },
-      { id: 38625, label: 'Banheiro',   emoji: '🚿' },
-      { id: 2339,  label: 'Carro',      emoji: '🚗' },
-      { id: 30516, label: 'Piscina',    emoji: '🏊' },
-      { id: 3118,  label: 'Igreja',     emoji: '⛪' },
-      { id: 3389,  label: 'Supermercado', emoji: '🛒' },
-    ]
-  },
-  vestuario: {
-    label: 'Vestuário',
-    items: [
-      { id: 2309,  label: 'Camiseta',    emoji: '👕' },
-      { id: 2565,  label: 'Calça',       emoji: '👖' },
-      { id: 2613,  label: 'Vestido',     emoji: '👗' },
-      { id: 32922, label: 'Sapato',      emoji: '👟' },
-      { id: 8339,  label: 'Meia',        emoji: '🧦' },
-      { id: 4872,  label: 'Casaco',      emoji: '🧥' },
-      { id: 2522,  label: 'Pijama',      emoji: '🩲' },
-      { id: 2289,  label: 'Cueca',       emoji: '🩳' },
-      { id: 2411,  label: 'Boné',        emoji: '🧢' },
-      { id: 30973, label: 'Chapéu',      emoji: '🤠' },
-      { id: 8314,  label: 'Luva',        emoji: '🧤' },
-      { id: 2290,  label: 'Cachecol',    emoji: '🧣' },
-      { id: 8368,  label: 'Sandália',    emoji: '🩴' },
-      { id: 8332,  label: 'Tênis',       emoji: '👟' },
-      { id: 2280,  label: 'Blusa',       emoji: '👚' },
-      { url: 'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/slippers.svg',        label: 'Chinelo',  emoji: '🩴' },
-      { url: 'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/swimming_trunks.svg', label: 'Shorts',   emoji: '🩳' },
-      { url: 'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/shorts.svg',          label: 'Bermuda',  emoji: '🩳' },
-      { url: 'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/vest.svg',            label: 'Regata',   emoji: '👕' },
-    ]
-  }
-};
+const COLOR_PALETTE = [
+  { key:'teal',   main:'#00BFA5', light:'#E0F7F4' },
+  { key:'pink',   main:'#EC407A', light:'#FCE4EC' },
+  { key:'amber',  main:'#FFA726', light:'#FFF3E0' },
+  { key:'blue',   main:'#42A5F5', light:'#E3F2FD' },
+  { key:'green',  main:'#66BB6A', light:'#E8F5E9' },
+  { key:'orange', main:'#FF7043', light:'#FBE9E7' },
+  { key:'purple', main:'#6C63FF', light:'#EEF0FF' },
+  { key:'coral',  main:'#FF6B6B', light:'#FFEEEE' },
+];
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
-let currentCat = 'necessidades';
-let sentence = [];
-let settings = {
-  speakCard: true,
-  speed: 1.0,
-  pitch: 1.2
-};
+const DEFAULT_CATS = [
+  { id:'necessidades', label:'Necessidades Básicas', icon:'🟢', colorKey:'teal', items:[
+    {id:32464,label:'Água',emoji:'💧'},{id:4611,label:'Comida',emoji:'🍽️'},
+    {id:38625,label:'Banheiro',emoji:'🚽'},{id:6479,label:'Dormir',emoji:'😴'},
+    {id:2367,label:'Dói',emoji:'🤕'},{id:35537,label:'Cansado',emoji:'😪'},
+    {id:4583,label:'Quente',emoji:'🌡️'},{id:4652,label:'Frio',emoji:'🥶'},
+    {id:12252,label:'Ajuda',emoji:'🙋'},{id:29129,label:'Não quero',emoji:'🙅'},
+    {id:5441,label:'Quero',emoji:'🙆'},{id:8163,label:'Remédio',emoji:'💊'},
+    {id:5584,label:'Sim',emoji:'✅'},{id:5526,label:'Não',emoji:'❌'},
+    {id:16713,label:'Xixi',emoji:'🚽'},{id:8050,label:'Cocô',emoji:'💩'},
+    {id:6058,label:'Banho',emoji:'🛁'},{id:6971,label:'Escovar os Dentes',emoji:'🦷'},
+    {id:8975,label:'Lavar as Mãos',emoji:'🧼'},{id:6952,label:'Estou com Calor',emoji:'🌡️'},
+    {id:35583,label:'Estou com Frio',emoji:'🥶'},
+  ]},
+  { id:'emocoes', label:'Emoções e Sentimentos', icon:'💗', colorKey:'pink', items:[
+    {id:35547,label:'Feliz',emoji:'😄'},{id:35545,label:'Triste',emoji:'😢'},
+    {id:35539,label:'Bravo',emoji:'😠'},{id:35535,label:'Assustado',emoji:'😨'},
+    {id:10261,label:'Medo',emoji:'😨'},{id:31310,label:'Calmo',emoji:'😌'},
+    {id:8020,label:'Amor',emoji:'❤️'},{id:5397,label:'Bem',emoji:'👍'},
+    {id:5504,label:'Mal',emoji:'👎'},{id:35531,label:'Entediado',emoji:'😑'},
+    {id:31408,label:'Orgulhoso',emoji:'🥹'},{id:30391,label:'Nervoso',emoji:'😬'},
+    {id:11178,label:'Carinho',emoji:'🥰'},{id:4550,label:'Abraço',emoji:'🤗'},
+    {id:2369,label:'Sono',emoji:'😴'},{id:2314,label:'Cansado',emoji:'😪'},
+    {id:35571,label:'Susto',emoji:'😱'},{id:2464,label:'Enjoado',emoji:'🤢'},
+    {id:38945,label:'Barulho',emoji:'🔊'},
+  ]},
+  { id:'atividades', label:'Atividades e Rotina', icon:'⭐', colorKey:'amber', items:[
+    {id:23392,label:'Brincar',emoji:'🎮'},{id:6456,label:'Comer',emoji:'🍴'},
+    {id:6495,label:'Estudar',emoji:'📚'},{id:2348,label:'Pintar',emoji:'🎨'},
+    {id:24791,label:'Música',emoji:'🎵'},{id:38587,label:'Tomar banho',emoji:'🛁'},
+    {id:5425,label:'Escovar dentes',emoji:'🦷'},{id:29951,label:'Passear',emoji:'🚶'},
+    {id:25498,label:'Assistir TV',emoji:'📺'},{id:28099,label:'Tablet',emoji:'📱'},
+    {id:35747,label:'Dançar',emoji:'💃'},{id:7141,label:'Ler',emoji:'📖'},
+  ]},
+  { id:'pessoas', label:'Pessoas', icon:'💙', colorKey:'blue', items:[
+    {id:6632,label:'Eu',emoji:'🙋'},{id:6625,label:'Você',emoji:'👉'},
+    {id:2458,label:'Mãe',emoji:'👩'},{id:2497,label:'Pai',emoji:'👨'},
+    {id:2423,label:'Irmão',emoji:'👦'},{id:2422,label:'Irmã',emoji:'👧'},
+    {id:23710,label:'Avó',emoji:'👵'},{id:23718,label:'Avô',emoji:'👴'},
+    {id:25790,label:'Amigo',emoji:'🤝'},{id:6556,label:'Professor',emoji:'👩‍🏫'},
+    {id:6561,label:'Médico',emoji:'👨‍⚕️'},{id:5596,label:'Todo mundo',emoji:'👥'},
+  ]},
+  { id:'lugares', label:'Lugares', icon:'🟩', colorKey:'green', items:[
+    {id:32446,label:'Escola',emoji:'🏫'},{id:6964,label:'Casa',emoji:'🏠'},
+    {id:36210,label:'Hospital',emoji:'🏥'},{id:5939,label:'Parque',emoji:'🌳'},
+    {id:35695,label:'Loja',emoji:'🏪'},{id:25966,label:'Cozinha',emoji:'🍳'},
+    {id:5988,label:'Quarto',emoji:'🛏️'},{id:38625,label:'Banheiro',emoji:'🚿'},
+    {id:2339,label:'Carro',emoji:'🚗'},{id:30516,label:'Piscina',emoji:'🏊'},
+    {id:3118,label:'Igreja',emoji:'⛪'},{id:3389,label:'Supermercado',emoji:'🛒'},
+  ]},
+  { id:'vestuario', label:'Vestuário', icon:'👕', colorKey:'orange', items:[
+    {id:2309,label:'Camiseta',emoji:'👕'},{id:2565,label:'Calça',emoji:'👖'},
+    {id:2613,label:'Vestido',emoji:'👗'},{id:32922,label:'Sapato',emoji:'👟'},
+    {id:8339,label:'Meia',emoji:'🧦'},{id:4872,label:'Casaco',emoji:'🧥'},
+    {id:2522,label:'Pijama',emoji:'🩲'},{id:2289,label:'Cueca',emoji:'🩳'},
+    {id:2411,label:'Boné',emoji:'🧢'},{id:30973,label:'Chapéu',emoji:'🤠'},
+    {id:8314,label:'Luva',emoji:'🧤'},{id:2290,label:'Cachecol',emoji:'🧣'},
+    {id:8368,label:'Sandália',emoji:'🩴'},{id:8332,label:'Tênis',emoji:'👟'},
+    {id:2280,label:'Blusa',emoji:'👚'},
+    {url:'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/slippers.svg',label:'Chinelo',emoji:'🩴'},
+    {url:'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/swimming_trunks.svg',label:'Shorts',emoji:'🩳'},
+    {url:'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/shorts.svg',label:'Bermuda',emoji:'🩳'},
+    {url:'https://raw.githubusercontent.com/mulberrysymbols/mulberry-symbols/master/EN/vest.svg',label:'Regata',emoji:'👕'},
+  ]},
+];
 
-// ── SPEECH ────────────────────────────────────────────────────────────────────
-let voices = [];
-window.speechSynthesis.onvoiceschanged = () => {
-  voices = window.speechSynthesis.getVoices();
-};
+// ── DATA ───────────────────────────────────────────────────────────────────────
+let appData;
 
-function getBRVoice() {
-  return voices.find(v => v.lang === 'pt-BR') ||
-         voices.find(v => v.lang.startsWith('pt')) ||
-         voices[0];
+function loadData() {
+  try {
+    const s = localStorage.getItem(DATA_KEY);
+    if (s) { appData = JSON.parse(s); return; }
+  } catch(e) {}
+  resetToDefaults(false);
 }
 
+function resetToDefaults(save=true) {
+  appData = {
+    categories: DEFAULT_CATS.map(cat => ({
+      ...cat,
+      items: cat.items.map((item, i) => ({ ...item, uid: cat.id + '_' + i }))
+    }))
+  };
+  if (save) saveData();
+}
+
+function saveData() {
+  try { localStorage.setItem(DATA_KEY, JSON.stringify(appData)); }
+  catch(e) { showToast('⚠️ Armazenamento cheio — imagem muito grande?'); }
+}
+
+function getCatById(id) { return appData.categories.find(c => c.id === id); }
+function getCatColors(key) { return COLOR_PALETTE.find(c => c.key === key) || COLOR_PALETTE[0]; }
+function genUID() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let currentCatId;
+let sentence = [];
+let editMode = false;
+let settings = { speakCard: true, speed: 1.0, pitch: 1.2 };
+let voices = [];
+let dragSrcIdx = null;
+let touchState = null;
+
+// ── SPEECH ─────────────────────────────────────────────────────────────────────
+window.speechSynthesis.onvoiceschanged = () => { voices = window.speechSynthesis.getVoices(); };
+function getBRVoice() {
+  return voices.find(v => v.lang === 'pt-BR') || voices.find(v => v.lang.startsWith('pt')) || voices[0];
+}
 function speak(text) {
   window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = 'pt-BR';
-  utter.rate = settings.speed;
-  utter.pitch = settings.pitch;
-  const voice = getBRVoice();
-  if (voice) utter.voice = voice;
-  window.speechSynthesis.speak(utter);
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'pt-BR'; u.rate = settings.speed; u.pitch = settings.pitch;
+  const v = getBRVoice(); if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
 }
 
-// ── RENDER CARDS ─────────────────────────────────────────────────────────────
-function renderCards(cat) {
+// ── RENDER TABS ────────────────────────────────────────────────────────────────
+function renderTabs() {
+  const el = document.getElementById('cat-tabs');
+  el.innerHTML = '';
+
+  appData.categories.forEach(cat => {
+    const colors = getCatColors(cat.colorKey);
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (cat.id === currentCatId ? ' active' : '');
+    tab.dataset.catId = cat.id;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', String(cat.id === currentCatId));
+    if (cat.id === currentCatId) {
+      tab.style.background = colors.main;
+      tab.style.color = '#fff';
+    }
+
+    const iconEl = document.createElement('span');
+    iconEl.className = 'tab-icon';
+    iconEl.textContent = cat.icon;
+    const lblEl = document.createTextNode(cat.label);
+    tab.appendChild(iconEl);
+    tab.appendChild(lblEl);
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'tab-ctrl edit-cat';
+    editBtn.title = 'Editar categoria';
+    editBtn.textContent = '✏';
+    editBtn.addEventListener('click', e => { e.stopPropagation(); openEditCatModal(cat.id); });
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'tab-ctrl del-cat';
+    delBtn.title = 'Excluir categoria';
+    delBtn.textContent = '✕';
+    delBtn.addEventListener('click', e => { e.stopPropagation(); confirmDeleteCat(cat.id); });
+
+    tab.appendChild(editBtn);
+    tab.appendChild(delBtn);
+    tab.addEventListener('click', () => switchCat(cat.id));
+    el.appendChild(tab);
+  });
+
+  const addTab = document.createElement('button');
+  addTab.className = 'tab tab-add';
+  const addIcon = document.createElement('span');
+  addIcon.style.fontSize = '26px';
+  addIcon.textContent = '+';
+  addTab.appendChild(addIcon);
+  addTab.appendChild(document.createTextNode('Nova'));
+  addTab.addEventListener('click', () => openAddCatModal());
+  el.appendChild(addTab);
+}
+
+function switchCat(id) {
+  currentCatId = id;
+  renderTabs();
+  renderCards();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── RENDER CARDS ───────────────────────────────────────────────────────────────
+function renderCards() {
   const grid = document.getElementById('cards-grid');
-  const title = document.getElementById('cards-title');
-  const data = categories[cat];
-  title.textContent = data.label;
+  const titleEl = document.getElementById('cards-title');
   grid.innerHTML = '';
+  const cat = getCatById(currentCatId);
+  if (!cat) return;
+  const colors = getCatColors(cat.colorKey);
+  titleEl.textContent = cat.label;
 
-  data.items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'card loading';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', item.label);
-    card.dataset.cat = cat;
-    card.dataset.label = item.label;
+  cat.items.forEach((item, idx) => {
+    grid.appendChild(buildCard(item, idx, colors));
+  });
 
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
+  const addTile = document.createElement('button');
+  addTile.className = 'card-add';
+  addTile.setAttribute('aria-label', 'Adicionar card');
+  const addIcon = document.createElement('span');
+  addIcon.style.fontSize = '28px';
+  addIcon.textContent = '+';
+  addTile.appendChild(addIcon);
+  addTile.appendChild(document.createTextNode('Novo card'));
+  addTile.addEventListener('click', () => openAddCardModal(currentCatId));
+  grid.appendChild(addTile);
+}
 
-    const img = new Image();
-    const pictoUrl = item.url || `${ARASAAC}${item.id}/${item.id}_500.png`;
-    img.src = pictoUrl;
+function buildCard(item, idx, colors) {
+  const card = document.createElement('div');
+  card.className = 'card loading';
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', item.label);
+  card.dataset.uid = item.uid;
+  card.dataset.idx = String(idx);
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'card-img-wrap';
+  imgWrap.style.background = colors.light;
+  loadCardImage(item, imgWrap, card);
+
+  const lbl = document.createElement('div');
+  lbl.className = 'card-label';
+  lbl.textContent = item.label;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'card-edit-overlay';
+
+  const btnEdit = document.createElement('button');
+  btnEdit.className = 'eov-btn eov-edit';
+  btnEdit.textContent = '✏️ Editar';
+  btnEdit.addEventListener('click', e => { e.stopPropagation(); openEditCardModal(currentCatId, item.uid); });
+
+  const btnMove = document.createElement('button');
+  btnMove.className = 'eov-btn eov-move';
+  btnMove.textContent = '↗️ Mover';
+  btnMove.addEventListener('click', e => { e.stopPropagation(); openMoveCardModal(currentCatId, item.uid); });
+
+  const btnDel = document.createElement('button');
+  btnDel.className = 'eov-btn eov-del';
+  btnDel.textContent = '🗑️ Excluir';
+  btnDel.addEventListener('click', e => { e.stopPropagation(); confirmDeleteCard(currentCatId, item.uid); });
+
+  overlay.appendChild(btnEdit);
+  overlay.appendChild(btnMove);
+  overlay.appendChild(btnDel);
+
+  card.appendChild(imgWrap);
+  card.appendChild(lbl);
+  card.appendChild(overlay);
+
+  card.addEventListener('click', () => {
+    if (editMode) return;
+    addToSentence(item.label);
+    if (settings.speakCard) speak(item.label);
+    card.classList.add('pressed');
+    setTimeout(() => card.classList.remove('pressed'), 180);
+  });
+  card.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && !editMode) {
+      e.preventDefault();
+      addToSentence(item.label);
+      if (settings.speakCard) speak(item.label);
+    }
+  });
+
+  setupMouseDrag(card, idx);
+  setupTouchDrag(card, idx);
+  return card;
+}
+
+function loadCardImage(item, imgWrap, card) {
+  if (item.customImg) {
+    const img = document.createElement('img');
+    img.src = item.customImg;
     img.alt = item.label;
-    img.onload = () => {
-      card.classList.remove('loading');
-      imgWrap.innerHTML = '';
-      imgWrap.appendChild(img);
-    };
+    img.onload = () => card.classList.remove('loading');
     img.onerror = () => {
       card.classList.remove('loading');
       imgWrap.innerHTML = `<span class="emoji-fallback" aria-hidden="true">${item.emoji}</span>`;
     };
     imgWrap.appendChild(img);
+    return;
+  }
+  const img = new Image();
+  img.src = item.url || `${ARASAAC}${item.id}/${item.id}_500.png`;
+  img.alt = item.label;
+  img.onload = () => { card.classList.remove('loading'); imgWrap.innerHTML = ''; imgWrap.appendChild(img); };
+  img.onerror = () => {
+    card.classList.remove('loading');
+    imgWrap.innerHTML = `<span class="emoji-fallback" aria-hidden="true">${item.emoji}</span>`;
+  };
+  imgWrap.appendChild(img);
+}
 
-    const lbl = document.createElement('div');
-    lbl.className = 'card-label';
-    lbl.textContent = item.label;
+// ── MOUSE DRAG (reorder within category) ──────────────────────────────────────
+function setupMouseDrag(card, idx) {
+  card.setAttribute('draggable', 'true');
 
-    card.appendChild(imgWrap);
-    card.appendChild(lbl);
-    grid.appendChild(card);
-
-    function handleCardActivate() {
-      addToSentence(item.label);
-      if (settings.speakCard) speak(item.label);
-      card.classList.add('pressed');
-      setTimeout(() => card.classList.remove('pressed'), 180);
-    }
-
-    card.addEventListener('click', handleCardActivate);
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCardActivate(); }
-    });
+  card.addEventListener('dragstart', e => {
+    if (!editMode) { e.preventDefault(); return; }
+    dragSrcIdx = idx;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+    document.querySelectorAll('.card.drag-over').forEach(c => c.classList.remove('drag-over'));
+    dragSrcIdx = null;
+  });
+  card.addEventListener('dragover', e => {
+    if (!editMode || dragSrcIdx === null || dragSrcIdx === idx) return;
+    e.preventDefault();
+    document.querySelectorAll('.card.drag-over').forEach(c => c.classList.remove('drag-over'));
+    card.classList.add('drag-over');
+  });
+  card.addEventListener('drop', e => {
+    if (!editMode || dragSrcIdx === null || dragSrcIdx === idx) return;
+    e.preventDefault();
+    const cat = getCatById(currentCatId);
+    const [moved] = cat.items.splice(dragSrcIdx, 1);
+    cat.items.splice(idx, 0, moved);
+    saveData();
+    renderCards();
   });
 }
 
-// ── SENTENCE ─────────────────────────────────────────────────────────────────
-function addToSentence(word) {
-  sentence.push(word);
-  renderSentence();
+// ── TOUCH DRAG (reorder within category) ──────────────────────────────────────
+function setupTouchDrag(card, idx) {
+  card.addEventListener('touchstart', e => {
+    if (!editMode) return;
+    const touch = e.touches[0];
+    const rect = card.getBoundingClientRect();
+    const ghost = card.cloneNode(true);
+    ghost.style.cssText = `position:fixed;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;opacity:0.75;pointer-events:none;z-index:9999;transform:scale(1.06);border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,0.22);transition:none;`;
+    document.body.appendChild(ghost);
+    card.style.opacity = '0.3';
+    touchState = { srcIdx: idx, ghost, card, offsetX: touch.clientX - rect.left, offsetY: touch.clientY - rect.top, lastOverIdx: null };
+  }, { passive: true });
+
+  card.addEventListener('touchmove', e => {
+    if (!touchState || touchState.srcIdx !== idx) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const { ghost, offsetX, offsetY } = touchState;
+    ghost.style.left = (touch.clientX - offsetX) + 'px';
+    ghost.style.top  = (touch.clientY - offsetY) + 'px';
+
+    ghost.style.display = 'none';
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    ghost.style.display = '';
+    const targetCard = el?.closest('.card[data-idx]');
+    const targetIdx = targetCard ? parseInt(targetCard.dataset.idx) : null;
+
+    document.querySelectorAll('.card.drag-over').forEach(c => c.classList.remove('drag-over'));
+    if (targetIdx !== null && targetIdx !== touchState.srcIdx) {
+      targetCard.classList.add('drag-over');
+      touchState.lastOverIdx = targetIdx;
+    } else {
+      touchState.lastOverIdx = null;
+    }
+  }, { passive: false });
+
+  card.addEventListener('touchend', () => {
+    if (!touchState || touchState.srcIdx !== idx) return;
+    const { srcIdx, lastOverIdx, ghost, card: srcCard } = touchState;
+    ghost.remove();
+    srcCard.style.opacity = '';
+    document.querySelectorAll('.card.drag-over').forEach(c => c.classList.remove('drag-over'));
+    touchState = null;
+    if (lastOverIdx !== null && lastOverIdx !== srcIdx) {
+      const cat = getCatById(currentCatId);
+      const [moved] = cat.items.splice(srcIdx, 1);
+      cat.items.splice(lastOverIdx, 0, moved);
+      saveData();
+      renderCards();
+    }
+  });
 }
+
+// ── SENTENCE ───────────────────────────────────────────────────────────────────
+function addToSentence(word) { sentence.push(word); renderSentence(); }
 
 function renderSentence() {
   const chips = document.getElementById('sentence-chips');
-  const placeholder = document.getElementById('sentence-placeholder');
   chips.innerHTML = '';
   if (sentence.length === 0) {
-    chips.appendChild(placeholder);
+    const ph = document.createElement('span');
+    ph.className = 's-placeholder';
+    ph.textContent = 'Toque nos cards para montar uma frase…';
+    chips.appendChild(ph);
     return;
   }
   sentence.forEach((word, i) => {
@@ -571,42 +802,419 @@ function renderSentence() {
     chip.textContent = word;
     chip.setAttribute('role', 'button');
     chip.setAttribute('aria-label', `Remover ${word}`);
-    chip.addEventListener('click', () => {
-      sentence.splice(i, 1);
-      renderSentence();
-    });
+    chip.addEventListener('click', () => { sentence.splice(i, 1); renderSentence(); });
     chips.appendChild(chip);
   });
 }
 
 document.getElementById('btn-speak').addEventListener('click', () => {
-  if (sentence.length === 0) { showToast('Adicione palavras para falar!'); return; }
+  if (!sentence.length) { showToast('Adicione palavras para falar!'); return; }
   speak(sentence.join(' '));
 });
-
 document.getElementById('btn-clear').addEventListener('click', () => {
-  sentence = [];
-  renderSentence();
-  showToast('Frase apagada');
+  sentence = []; renderSentence(); showToast('Frase apagada');
 });
 
-// ── TABS ──────────────────────────────────────────────────────────────────────
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
-    });
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-    currentCat = tab.dataset.cat;
-    renderCards(currentCat);
-    document.getElementById('cards-section').scrollTop = 0;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ── EDIT MODE ──────────────────────────────────────────────────────────────────
+document.getElementById('btn-edit').addEventListener('click', () => {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  const btn = document.getElementById('btn-edit');
+  btn.classList.toggle('active', editMode);
+  btn.textContent = editMode ? '✅ Concluir' : '✏️ Editar';
+  renderTabs();
+  renderCards();
+  showToast(editMode ? 'Modo edição ativado' : 'Edição concluída');
+});
+
+// ── MODAL SYSTEM ───────────────────────────────────────────────────────────────
+function openModal(html, onOpen) {
+  const overlay = document.getElementById('modal-overlay');
+  const box = document.getElementById('modal-box');
+  box.innerHTML = '<div class="modal-handle"></div>' + html;
+  overlay.classList.add('open');
+  overlay.onclick = e => { if (e.target === overlay) closeModal(); };
+  if (onOpen) onOpen(box);
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+// ── EDIT CARD ──────────────────────────────────────────────────────────────────
+function openEditCardModal(catId, uid) {
+  const cat = getCatById(catId);
+  const item = cat?.items.find(it => it.uid === uid);
+  if (!item) return;
+  const srcArasaac = !item.customImg && item.id;
+  const srcUrl     = !item.customImg && item.url && !item.id;
+  const srcUpload  = !!item.customImg;
+
+  openModal(`
+    <div class="modal-title">✏️ Editar Card</div>
+    <div class="modal-field">
+      <label class="modal-lbl">Texto do card</label>
+      <input type="text" class="modal-input" id="m-label" value="${esc(item.label)}" placeholder="Ex: Água">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Emoji (fallback)</label>
+      <input type="text" class="modal-input w-auto" id="m-emoji" value="${esc(item.emoji)}" placeholder="💧">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Imagem</label>
+      ${imgSourceHTML(srcArasaac, srcUrl || (!srcArasaac && !srcUpload), srcUpload, item)}
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-mp" id="m-save">Salvar</button>
+    </div>
+  `, box => {
+    setupImgSwitcher(box, item);
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-save').addEventListener('click', () => saveCardEdits(catId, uid, box));
   });
-});
+}
 
-// ── BOTTOM NAV ────────────────────────────────────────────────────────────────
+function imgSourceHTML(isArasaac, isUrl, isUpload, item) {
+  const prevContent = item.customImg
+    ? `<img src="${esc(item.customImg)}" style="width:100%;height:100%;object-fit:contain;">`
+    : (item.url || item.id)
+      ? `<img src="${esc(item.url || `${ARASAAC}${item.id}/${item.id}_500.png`)}" style="width:100%;height:100%;object-fit:contain;" onerror="this.parentElement.textContent='${esc(item.emoji || '?')}';">`
+      : (item.emoji || '?');
+  return `
+    <div class="img-src-tabs">
+      <button class="img-src-tab ${isArasaac?'active':''}" data-src="arasaac">ARASAAC ID</button>
+      <button class="img-src-tab ${isUrl?'active':''}" data-src="url">URL</button>
+      <button class="img-src-tab ${isUpload?'active':''}" data-src="upload">Arquivo</button>
+    </div>
+    <div class="img-src-panel ${isArasaac?'active':''}" id="panel-arasaac">
+      <input type="text" class="modal-input" id="m-arasaac-id" value="${esc(item.id||'')}" placeholder="Ex: 32464">
+    </div>
+    <div class="img-src-panel ${isUrl?'active':''}" id="panel-url">
+      <input type="url" class="modal-input" id="m-url" value="${esc(item.url||'')}" placeholder="https://...">
+    </div>
+    <div class="img-src-panel ${isUpload?'active':''}" id="panel-upload">
+      <label class="file-upload-area" id="upload-area">
+        📁 Toque para escolher imagem
+        <input type="file" id="m-file" accept="image/*">
+      </label>
+    </div>
+    <div class="img-preview-row">
+      <div class="img-preview" id="m-preview">${prevContent}</div>
+      <span class="img-preview-hint">Prévia da imagem<br>Tamanho será reduzido<br>automaticamente.</span>
+    </div>`;
+}
+
+function setupImgSwitcher(box, item) {
+  let pendingB64 = null;
+  box.querySelectorAll('.img-src-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      box.querySelectorAll('.img-src-tab').forEach(t => t.classList.remove('active'));
+      box.querySelectorAll('.img-src-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      box.querySelector('#panel-' + tab.dataset.src).classList.add('active');
+    });
+  });
+
+  const idInput = box.querySelector('#m-arasaac-id');
+  if (idInput) {
+    idInput.addEventListener('input', () => {
+      const id = idInput.value.trim();
+      if (id) setPreview(box, `${ARASAAC}${id}/${id}_500.png`, null);
+    });
+  }
+  const urlInput = box.querySelector('#m-url');
+  if (urlInput) {
+    urlInput.addEventListener('input', () => {
+      const url = urlInput.value.trim();
+      if (url) setPreview(box, url, null);
+    });
+  }
+  const fileInput = box.querySelector('#m-file');
+  if (fileInput) {
+    const area = box.querySelector('#upload-area');
+    area.addEventListener('click', e => { e.preventDefault(); fileInput.click(); });
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files[0];
+      if (!f) return;
+      resizeImage(f, 200, 200, b64 => { pendingB64 = b64; setPreview(box, null, b64); });
+    });
+  }
+  box._getB64 = () => pendingB64;
+}
+
+function setPreview(box, url, b64) {
+  const p = box.querySelector('#m-preview');
+  if (!p) return;
+  if (b64) { p.innerHTML = `<img src="${b64}" style="width:100%;height:100%;object-fit:contain;">`; return; }
+  p.innerHTML = `<img src="${esc(url)}" style="width:100%;height:100%;object-fit:contain;" onerror="this.parentElement.textContent='?'">`;
+}
+
+function saveCardEdits(catId, uid, box) {
+  const cat = getCatById(catId);
+  const item = cat?.items.find(it => it.uid === uid);
+  if (!item) return;
+  const label = box.querySelector('#m-label').value.trim();
+  if (!label) { showToast('O texto não pode ser vazio'); return; }
+  item.label = label;
+  const emoji = box.querySelector('#m-emoji').value.trim();
+  if (emoji) item.emoji = emoji;
+  applyImgEdits(box, item);
+  saveData(); closeModal(); renderCards(); showToast('Card atualizado!');
+}
+
+function applyImgEdits(box, item) {
+  const active = box.querySelector('.img-src-tab.active')?.dataset.src;
+  const b64 = box._getB64?.();
+  if (active === 'arasaac') {
+    const id = parseInt(box.querySelector('#m-arasaac-id')?.value.trim());
+    if (id) { item.id = id; delete item.url; delete item.customImg; }
+  } else if (active === 'url') {
+    const url = box.querySelector('#m-url')?.value.trim();
+    if (url) { item.url = url; delete item.id; delete item.customImg; }
+  } else if (active === 'upload' && b64) {
+    item.customImg = b64; delete item.id; delete item.url;
+  }
+}
+
+// ── ADD CARD ───────────────────────────────────────────────────────────────────
+function openAddCardModal(catId) {
+  openModal(`
+    <div class="modal-title">➕ Novo Card</div>
+    <div class="modal-field">
+      <label class="modal-lbl">Texto do card</label>
+      <input type="text" class="modal-input" id="m-label" placeholder="Ex: Água">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Emoji (fallback)</label>
+      <input type="text" class="modal-input w-auto" id="m-emoji" placeholder="📌">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Imagem</label>
+      ${imgSourceHTML(true, false, false, {})}
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-mp" id="m-save">Adicionar</button>
+    </div>
+  `, box => {
+    setupImgSwitcher(box, {});
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-save').addEventListener('click', () => {
+      const label = box.querySelector('#m-label').value.trim();
+      const emoji = box.querySelector('#m-emoji').value.trim() || '📌';
+      if (!label) { showToast('O texto não pode ser vazio'); return; }
+      const newItem = { uid: genUID(), label, emoji };
+      applyImgEdits(box, newItem);
+      if (!newItem.id && !newItem.url && !newItem.customImg) {
+        showToast('Adicione uma imagem, ID ARASAAC ou URL'); return;
+      }
+      const cat = getCatById(catId);
+      cat.items.push(newItem);
+      saveData(); closeModal(); renderCards(); showToast('Card adicionado!');
+    });
+  });
+}
+
+// ── MOVE CARD ──────────────────────────────────────────────────────────────────
+function openMoveCardModal(catId, uid) {
+  const others = appData.categories.filter(c => c.id !== catId);
+  const opts = others.map(c =>
+    `<div class="cat-opt" data-cat-id="${esc(c.id)}"><span class="cat-opt-icon">${c.icon}</span>${esc(c.label)}</div>`
+  ).join('');
+
+  openModal(`
+    <div class="modal-title">↗️ Mover Card</div>
+    <p style="font-size:14px;color:var(--text-muted);font-weight:700;margin-bottom:14px;">Escolha a categoria de destino:</p>
+    ${opts}
+    <div class="modal-actions" style="margin-top:10px;">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-mp" id="m-move">Mover</button>
+    </div>
+  `, box => {
+    let selectedId = null;
+    box.querySelectorAll('.cat-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        box.querySelectorAll('.cat-opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        selectedId = opt.dataset.catId;
+      });
+    });
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-move').addEventListener('click', () => {
+      if (!selectedId) { showToast('Selecione uma categoria'); return; }
+      const src = getCatById(catId);
+      const dst = getCatById(selectedId);
+      const idx = src.items.findIndex(it => it.uid === uid);
+      if (idx === -1) return;
+      const [moved] = src.items.splice(idx, 1);
+      dst.items.push(moved);
+      saveData(); closeModal(); renderCards();
+      showToast(`Movido para "${dst.label}"!`);
+    });
+  });
+}
+
+// ── DELETE CARD ────────────────────────────────────────────────────────────────
+function confirmDeleteCard(catId, uid) {
+  const cat = getCatById(catId);
+  const item = cat?.items.find(it => it.uid === uid);
+  if (!item) return;
+  openModal(`
+    <div class="modal-title">🗑️ Excluir Card</div>
+    <p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:20px;">
+      Excluir o card <strong>${esc(item.label)}</strong>? Esta ação não pode ser desfeita.
+    </p>
+    <div class="modal-actions">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-md" id="m-del">Excluir</button>
+    </div>
+  `, box => {
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-del').addEventListener('click', () => {
+      const cat = getCatById(catId);
+      const idx = cat.items.findIndex(it => it.uid === uid);
+      if (idx !== -1) cat.items.splice(idx, 1);
+      saveData(); closeModal(); renderCards(); showToast('Card excluído');
+    });
+  });
+}
+
+// ── EDIT CATEGORY ──────────────────────────────────────────────────────────────
+function openEditCatModal(catId) {
+  const cat = getCatById(catId);
+  if (!cat) return;
+  const swatches = COLOR_PALETTE.map(c =>
+    `<div class="color-swatch ${c.key===cat.colorKey?'selected':''}" data-key="${c.key}" style="background:${c.main}" title="${c.key}"></div>`
+  ).join('');
+  openModal(`
+    <div class="modal-title">✏️ Editar Categoria</div>
+    <div class="modal-field">
+      <label class="modal-lbl">Nome</label>
+      <input type="text" class="modal-input" id="m-cat-label" value="${esc(cat.label)}" placeholder="Ex: Animais">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Ícone (emoji)</label>
+      <input type="text" class="modal-input w-auto" id="m-cat-icon" value="${esc(cat.icon)}" placeholder="🐾">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Cor</label>
+      <div class="color-palette">${swatches}</div>
+    </div>
+    <div class="modal-actions" style="margin-top:8px;">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-mp" id="m-save">Salvar</button>
+    </div>
+  `, box => {
+    let selectedColor = cat.colorKey;
+    box.querySelectorAll('.color-swatch').forEach(sw => {
+      sw.addEventListener('click', () => {
+        box.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+        sw.classList.add('selected');
+        selectedColor = sw.dataset.key;
+      });
+    });
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-save').addEventListener('click', () => {
+      const label = box.querySelector('#m-cat-label').value.trim();
+      if (!label) { showToast('O nome não pode ser vazio'); return; }
+      cat.label = label;
+      const icon = box.querySelector('#m-cat-icon').value.trim();
+      if (icon) cat.icon = icon;
+      cat.colorKey = selectedColor;
+      saveData(); closeModal(); renderTabs(); renderCards(); showToast('Categoria atualizada!');
+    });
+  });
+}
+
+// ── ADD CATEGORY ───────────────────────────────────────────────────────────────
+function openAddCatModal() {
+  const swatches = COLOR_PALETTE.map((c, i) =>
+    `<div class="color-swatch ${i===0?'selected':''}" data-key="${c.key}" style="background:${c.main}" title="${c.key}"></div>`
+  ).join('');
+  openModal(`
+    <div class="modal-title">➕ Nova Categoria</div>
+    <div class="modal-field">
+      <label class="modal-lbl">Nome</label>
+      <input type="text" class="modal-input" id="m-cat-label" placeholder="Ex: Animais">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Ícone (emoji)</label>
+      <input type="text" class="modal-input w-auto" id="m-cat-icon" placeholder="🐾">
+    </div>
+    <div class="modal-field">
+      <label class="modal-lbl">Cor</label>
+      <div class="color-palette">${swatches}</div>
+    </div>
+    <div class="modal-actions" style="margin-top:8px;">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-mp" id="m-save">Criar</button>
+    </div>
+  `, box => {
+    let selectedColor = COLOR_PALETTE[0].key;
+    box.querySelectorAll('.color-swatch').forEach(sw => {
+      sw.addEventListener('click', () => {
+        box.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+        sw.classList.add('selected');
+        selectedColor = sw.dataset.key;
+      });
+    });
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-save').addEventListener('click', () => {
+      const label = box.querySelector('#m-cat-label').value.trim();
+      const icon  = box.querySelector('#m-cat-icon').value.trim() || '📁';
+      if (!label) { showToast('O nome não pode ser vazio'); return; }
+      const newCat = { id: genUID(), label, icon, colorKey: selectedColor, items: [] };
+      appData.categories.push(newCat);
+      saveData(); closeModal(); switchCat(newCat.id); showToast('Categoria criada!');
+    });
+  });
+}
+
+// ── DELETE CATEGORY ────────────────────────────────────────────────────────────
+function confirmDeleteCat(catId) {
+  const cat = getCatById(catId);
+  if (!cat) return;
+  if (appData.categories.length <= 1) { showToast('Não é possível excluir a única categoria'); return; }
+  openModal(`
+    <div class="modal-title">🗑️ Excluir Categoria</div>
+    <p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">
+      Excluir <strong>${esc(cat.label)}</strong> e todos os seus ${cat.items.length} cards?
+    </p>
+    <p style="font-size:13px;color:var(--coral);font-weight:700;margin-bottom:20px;">Esta ação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-md" id="m-del">Excluir tudo</button>
+    </div>
+  `, box => {
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-del').addEventListener('click', () => {
+      const idx = appData.categories.findIndex(c => c.id === catId);
+      if (idx !== -1) appData.categories.splice(idx, 1);
+      saveData();
+      currentCatId = appData.categories[0]?.id;
+      closeModal(); renderTabs(); renderCards(); showToast('Categoria excluída');
+    });
+  });
+}
+
+// ── IMAGE RESIZE ───────────────────────────────────────────────────────────────
+function resizeImage(file, maxW, maxH, cb) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const ratio = Math.min(maxW / img.width, maxH / img.height, 1);
+      const w = Math.round(img.width * ratio);
+      const h = Math.round(img.height * ratio);
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/png', 0.85));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── BOTTOM NAV ─────────────────────────────────────────────────────────────────
 document.getElementById('nav-home').addEventListener('click', () => {
   document.getElementById('nav-home').classList.add('active');
   document.getElementById('nav-settings').classList.remove('active');
@@ -614,7 +1222,6 @@ document.getElementById('nav-home').addEventListener('click', () => {
   document.getElementById('cat-tabs').style.display = '';
   document.getElementById('settings-panel').classList.remove('visible');
 });
-
 document.getElementById('nav-settings').addEventListener('click', () => {
   document.getElementById('nav-settings').classList.add('active');
   document.getElementById('nav-home').classList.remove('active');
@@ -623,36 +1230,53 @@ document.getElementById('nav-settings').addEventListener('click', () => {
   document.getElementById('settings-panel').classList.add('visible');
 });
 
-// ── SETTINGS ─────────────────────────────────────────────────────────────────
-document.getElementById('toggle-speak-card').addEventListener('change', e => {
-  settings.speakCard = e.target.checked;
-});
+// ── SETTINGS ───────────────────────────────────────────────────────────────────
+document.getElementById('toggle-speak-card').addEventListener('change', e => { settings.speakCard = e.target.checked; });
 document.getElementById('speed-range').addEventListener('input', e => {
   settings.speed = parseFloat(e.target.value);
   document.getElementById('speed-val').textContent = settings.speed.toFixed(1) + '×';
 });
-document.getElementById('pitch-range').addEventListener('input', e => {
-  settings.pitch = parseFloat(e.target.value);
+document.getElementById('pitch-range').addEventListener('input', e => { settings.pitch = parseFloat(e.target.value); });
+document.getElementById('btn-reset-data').addEventListener('click', () => {
+  openModal(`
+    <div class="modal-title">🔄 Restaurar Padrões</div>
+    <p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">Remover todas as personalizações e voltar ao estado original?</p>
+    <p style="font-size:13px;color:var(--coral);font-weight:700;margin-bottom:20px;">Esta ação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="btn-ms" id="m-cancel">Cancelar</button>
+      <button class="btn-md" id="m-reset">Restaurar</button>
+    </div>
+  `, box => {
+    box.querySelector('#m-cancel').addEventListener('click', closeModal);
+    box.querySelector('#m-reset').addEventListener('click', () => {
+      resetToDefaults(true);
+      currentCatId = appData.categories[0].id;
+      closeModal(); renderTabs(); renderCards(); showToast('Dados restaurados!');
+    });
+  });
 });
 
-// ── TOAST ─────────────────────────────────────────────────────────────────────
+// ── TOAST ──────────────────────────────────────────────────────────────────────
+let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// ── SERVICE WORKER + AUTO-UPDATE ──────────────────────────────────────────────
+// ── HELPERS ────────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── SERVICE WORKER ─────────────────────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(reg => {
-    // Verifica atualizações a cada vez que a página fica visível
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') reg.update();
     });
   }).catch(() => {});
-
-  // Quando um novo SW assume o controle, recarrega silenciosamente
   let refreshing = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (refreshing) return;
@@ -662,9 +1286,12 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-renderCards('necessidades');
-// Pre-load voices
+// ── INIT ───────────────────────────────────────────────────────────────────────
+loadData();
+currentCatId = appData.categories[0]?.id;
+renderSentence();
+renderTabs();
+renderCards();
 setTimeout(() => { voices = window.speechSynthesis.getVoices(); }, 500);
 </script>
 </body>
