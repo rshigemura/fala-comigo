@@ -1319,7 +1319,6 @@ function exportConfig() {
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     navigator.share({
       files: [file],
-      title: 'Fala Comigo — configuração',
     }).catch(err => {
       if (err.name !== 'AbortError') downloadFile(payload, filename);
     });
