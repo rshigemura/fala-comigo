@@ -382,7 +382,7 @@ body.edit-mode .card-add { display: flex; }
       <p>Carrega um arquivo exportado anteriormente</p>
     </div>
     <span style="font-size:20px;">📥</span>
-    <input type="file" id="import-file-input" accept=".json" style="position:absolute;opacity:0;width:0;height:0;">
+    <input type="file" id="import-file-input" accept=".json,application/json,text/plain" style="position:absolute;opacity:0;width:0;height:0;">
   </div>
   <div class="setting-row" style="cursor:pointer;" id="btn-reset-data">
     <div>
@@ -1310,7 +1310,10 @@ function exportConfig() {
     data: appData
   }, null, 2);
 
-  const file = new File([payload], filename, { type: 'application/json' });
+  // iOS Safari exige text/plain para o Web Share API funcionar com arquivos
+  // application/json gera arquivos 0 KB no iOS
+  const blob = new Blob([payload], { type: 'text/plain' });
+  const file = new File([blob], filename, { type: 'text/plain' });
 
   // Mobile: Web Share API com arquivo (Android/iOS — abre WhatsApp, email, etc.)
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1328,7 +1331,7 @@ function exportConfig() {
 }
 
 function downloadFile(content, filename) {
-  const blob = new Blob([content], { type: 'application/json' });
+  const blob = new Blob([content], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = filename;
