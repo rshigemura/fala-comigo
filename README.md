@@ -22,13 +22,24 @@ Desenvolvido como prova de conceito inspirado no TDSnap, usando pictogramas do A
 
 ## ✨ Funcionalidades
 
-- **5 categorias**: Necessidades Básicas, Emoções, Atividades, Pessoas, Lugares
-- **60 pictogramas** do ARASAAC (licença Creative Commons BY-NC-SA)
+- **7 categorias**: Necessidades Básicas, Emoções, Atividades, Pessoas, Lugares, Vestuário
+- **~100 pictogramas** do ARASAAC + símbolos Mulberry (Creative Commons)
 - **Barra de frase**: monte sentenças tocando em múltiplos cards
 - **Síntese de voz** em Português do Brasil (Web Speech API)
-- **Feedback háptico** (vibração) ao tocar cards
+- **Modo de edição**: adicione, edite, mova, reordene e exclua cards e categorias
+- **Exportar/Importar** configuração em JSON (backup e compartilhamento)
 - **Offline-first**: após primeira visita, funciona sem internet
 - **Acessibilidade**: navegação por teclado, ARIA labels, roles semânticos
+
+## 📖 Documentação
+
+Guia completo em **[documentacao.html](documentacao.html)** (também acessível pelo ícone ❔ no app e em Ajustes → Ajuda e documentação), com seções dedicadas a:
+
+- 👨‍👩‍👧 **Pais e famílias** — por onde começar, dicas do dia a dia, mitos
+- 🧩 **Terapeutas** — aplicação clínica, vocabulário nuclear, prescrição de pranchas
+- 🩺 **Profissionais de saúde** — casos de uso, vantagens, ressalvas
+
+A página é autocontida e pode ser **baixada para uso offline** pelo botão “⬇️ Baixar offline”.
 
 ## ⚙️ Configurações disponíveis
 
@@ -77,4 +88,21 @@ Cada item precisa de:
 
 ---
 
-Feito com ❤️ para crianças que se comunicam de formas diferentes.
+## 🔄 Manutenção da documentação
+
+A documentação é mantida em sincronia com o app por dois mecanismos automáticos:
+
+1. **Hook do Claude Code** (`.claude/settings.json`): ao editar `index.html`, lembra de revisar `documentacao.html`.
+2. **Git pre-commit hook** (`scripts/git-hooks/pre-commit`): bloqueia o commit se `index.html` mudar sem `documentacao.html`.
+
+Após clonar o repositório, instale o git hook uma vez:
+
+```bash
+bash scripts/install-hooks.sh
+```
+
+Ao atualizar a documentação, lembre-se de incrementar o `CACHE_VERSION` em `sw.js` para que a nova versão chegue aos usuários offline.
+
+---
+
+Criado com amor para pessoas especiais 💜

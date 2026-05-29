@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Documentação — Fala Comigo">
+<meta name="theme-color" content="#6C63FF">
+<meta name="description" content="Guia completo do Fala Comigo — Comunicação Aumentativa e Alternativa (CAA) para pais, terapeutas e profissionais de saúde.">
+<title>Documentação — Fala Comigo</title>
+<style>
+/* ── Self-contained: nenhuma dependência externa, funciona 100% offline ── */
+:root {
+  --purple: #6C63FF; --purple-light: #EEF0FF; --purple-dark: #4A43D4;
+  --teal: #00BFA5; --teal-light: #E0F7F4;
+  --coral: #FF6B6B; --coral-light: #FFEEEE;
+  --amber: #FFA726; --amber-light: #FFF3E0;
+  --green: #66BB6A; --green-light: #E8F5E9;
+  --blue: #42A5F5; --blue-light: #E3F2FD;
+  --pink: #EC407A; --pink-light: #FCE4EC;
+  --bg: #F5F6FA; --card-bg: #FFFFFF;
+  --text: #2D2D3A; --text-muted: #7B7B9A;
+  --radius: 20px;
+  --shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.65; -webkit-text-size-adjust: 100%;
+}
+
+/* ── HEADER ── */
+#doc-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--card-bg);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+#doc-header h1 { font-size: 19px; font-weight: 800; color: var(--purple); letter-spacing: -0.5px; flex: 1; }
+#doc-header h1 span { color: var(--coral); }
+.hdr-btn {
+  border: none; cursor: pointer; border-radius: 12px;
+  padding: 8px 14px; font-size: 13px; font-weight: 800;
+  font-family: inherit; display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none; transition: transform 0.12s, background 0.15s;
+}
+.hdr-btn:active { transform: scale(0.95); }
+.hdr-btn.primary { background: var(--purple); color: #fff; }
+.hdr-btn.ghost { background: var(--purple-light); color: var(--purple-dark); }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+#offline-tip {
+  background: var(--teal-light); color: #00695C;
+  border-radius: 14px; padding: 12px 16px; margin: 16px auto 0;
+  max-width: 860px; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; gap: 10px;
+}
+#offline-tip span.ico { font-size: 20px; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center; padding: 28px 16px 8px;
+}
+.hero .emoji { font-size: 54px; line-height: 1; }
+.hero h2 { font-size: 26px; font-weight: 900; margin: 10px 0 6px; color: var(--text); letter-spacing: -0.5px; }
+.hero p { font-size: 15px; color: var(--text-muted); font-weight: 700; max-width: 560px; margin: 0 auto; }
+
+/* ── TABLE OF CONTENTS ── */
+#toc {
+  background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 18px 20px; margin: 22px auto;
+}
+#toc h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 12px; }
+#toc ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; }
+#toc a {
+  color: var(--purple-dark); text-decoration: none; font-weight: 700; font-size: 14px;
+  display: flex; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 8px;
+  transition: background 0.15s;
+}
+#toc a:hover { background: var(--purple-light); }
+@media (max-width: 560px){ #toc ul { grid-template-columns: 1fr; } }
+
+/* ── SECTIONS ── */
+section {
+  background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 24px 22px; margin: 0 auto 18px; scroll-margin-top: 80px;
+}
+section > h2 {
+  font-size: 21px; font-weight: 900; color: var(--text); letter-spacing: -0.4px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.section-badge {
+  display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
+}
+.badge-todos    { background: var(--purple-light); color: var(--purple-dark); }
+.badge-pais     { background: var(--green-light);  color: #2E7D32; }
+.badge-terapeut { background: var(--blue-light);   color: #1565C0; }
+.badge-saude    { background: var(--coral-light);  color: #C62828; }
+
+section h3 { font-size: 16px; font-weight: 800; color: var(--purple-dark); margin: 18px 0 8px; }
+section h4 { font-size: 14.5px; font-weight: 800; color: var(--text); margin: 14px 0 6px; }
+section p { font-size: 15px; margin-bottom: 10px; color: var(--text); }
+section ul, section ol { margin: 0 0 12px 22px; }
+section li { font-size: 15px; margin-bottom: 6px; }
+section strong { font-weight: 800; }
+section a { color: var(--purple); font-weight: 700; }
+
+.tip, .note, .warn {
+  border-radius: 14px; padding: 12px 16px; margin: 12px 0; font-size: 14px; font-weight: 600;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.tip  { background: var(--teal-light);  color: #00695C; }
+.note { background: var(--amber-light); color: #E65100; }
+.warn { background: var(--coral-light); color: #C62828; }
+.tip .ico, .note .ico, .warn .ico { font-size: 18px; flex-shrink: 0; }
+
+.steps { counter-reset: step; list-style: none; margin-left: 0 !important; }
+.steps li {
+  position: relative; padding-left: 40px; margin-bottom: 12px; min-height: 28px;
+  display: flex; align-items: center; flex-wrap: wrap;
+}
+.steps li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--purple); color: #fff; font-weight: 800; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.kbd {
+  background: #EAEAEF; border-radius: 6px; padding: 2px 8px;
+  font-size: 13px; font-weight: 800; color: var(--text);
+}
+.divider { height: 1px; background: #EAEAEF; margin: 18px 0; border: none; }
+
+table.tbl { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+table.tbl th, table.tbl td { text-align: left; padding: 9px 12px; border-bottom: 1px solid #EAEAEF; }
+table.tbl th { font-weight: 800; color: var(--purple-dark); background: var(--purple-light); }
+table.tbl tr:last-child td { border-bottom: none; }
+
+/* ── FAQ ── */
+details.faq {
+  background: var(--bg); border-radius: 14px; padding: 4px 16px; margin-bottom: 8px;
+  border: 1px solid #EAEAEF;
+}
+details.faq summary {
+  cursor: pointer; font-weight: 800; font-size: 15px; padding: 12px 0;
+  list-style: none; display: flex; align-items: center; gap: 8px;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq summary::before { content: '＋'; color: var(--purple); font-weight: 900; font-size: 18px; }
+details.faq[open] summary::before { content: '－'; }
+details.faq p { padding-bottom: 12px; font-size: 14.5px; }
+
+/* ── FOOTER ── */
+#doc-footer {
+  text-align: center; padding: 36px 16px 48px; color: var(--text-muted);
+}
+#doc-footer .love {
+  font-size: 18px; font-weight: 900; color: var(--coral); margin-bottom: 8px;
+}
+#doc-footer .meta { font-size: 12.5px; font-weight: 700; }
+#doc-footer a { color: var(--purple); font-weight: 700; }
+
+.back-to-top {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 18px; font-size: 13px; font-weight: 800; color: var(--purple);
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<header id="doc-header">
+  <h1>Fala <span>Comigo</span> 💬 · Documentação</h1>
+  <a href="index.html" class="hdr-btn ghost" aria-label="Voltar ao aplicativo">← Voltar ao app</a>
+  <button class="hdr-btn primary" id="btn-download" aria-label="Baixar documentação para uso offline">⬇️ Baixar offline</button>
+</header>
+
+<div id="offline-tip">
+  <span class="ico">📡</span>
+  <span>Esta página funciona <strong>sem internet</strong> depois da primeira visita. Toque em <strong>“Baixar offline”</strong> para guardar uma cópia no seu dispositivo.</span>
+</div>
+
+<div class="hero">
+  <div class="emoji">💬</div>
+  <h2>Guia completo do Fala Comigo</h2>
+  <p>Comunicação Aumentativa e Alternativa (CAA) para todas as pessoas que se comunicam de formas diferentes. Escolha abaixo a seção feita para você.</p>
+</div>
+
+<div class="wrap">
+  <nav id="toc" aria-label="Índice">
+    <h3>📑 Navegue pelo conteúdo</h3>
+    <ul>
+      <li><a href="#o-que-e">💡 O que é o Fala Comigo</a></li>
+      <li><a href="#primeiros-passos">🚀 Primeiros passos / Instalar</a></li>
+      <li><a href="#usar">👆 Como usar no dia a dia</a></li>
+      <li><a href="#pais">👨‍👩‍👧 Para Pais e Famílias</a></li>
+      <li><a href="#terapeutas">🧩 Para Terapeutas</a></li>
+      <li><a href="#saude">🩺 Para Profissionais de Saúde</a></li>
+      <li><a href="#personalizar">✏️ Personalizar cards</a></li>
+      <li><a href="#backup">💾 Backup (exportar/importar)</a></li>
+      <li><a href="#voz">🔊 Voz e acessibilidade</a></li>
+      <li><a href="#privacidade">🔒 Privacidade e dados</a></li>
+      <li><a href="#faq">❓ Perguntas frequentes</a></li>
+      <li><a href="#creditos">📜 Créditos e licenças</a></li>
+    </ul>
+  </nav>
+
+  <!-- ───────────────────────── O QUE É ───────────────────────── -->
+  <section id="o-que-e">
+    <h2>💡 O que é o Fala Comigo</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>O <strong>Fala Comigo</strong> é um aplicativo gratuito de <strong>Comunicação Aumentativa e Alternativa (CAA)</strong> — em inglês, <em>AAC</em>. Ele dá voz a pessoas que têm dificuldade de se comunicar pela fala, oferecendo <strong>pranchas de comunicação por símbolos</strong>: o usuário toca em figuras (pictogramas) para montar frases, e o aplicativo fala em voz alta em Português do Brasil.</p>
+    <p>É indicado para crianças e adultos no espectro autista, com paralisia cerebral, apraxia de fala, síndromes genéticas, afasia, ou qualquer condição que torne a fala difícil — temporária ou permanentemente.</p>
+    <h3>O que ele faz</h3>
+    <ul>
+      <li><strong>Pranchas por categorias</strong>: Necessidades Básicas, Emoções, Atividades, Pessoas, Lugares, Vestuário e mais.</li>
+      <li><strong>Montar frases</strong>: toque em vários cards para formar uma sentença e ouça-a falada.</li>
+      <li><strong>Voz em Português</strong>: síntese de fala natural, com velocidade e tom ajustáveis.</li>
+      <li><strong>Totalmente personalizável</strong>: adicione, edite, mova e reordene cards e categorias com suas próprias fotos.</li>
+      <li><strong>Funciona offline</strong>: depois de aberto uma vez, funciona sem internet.</li>
+      <li><strong>Sem cadastro e sem custo</strong>: nenhum login, nenhuma cobrança, nenhum anúncio.</li>
+    </ul>
+    <div class="tip"><span class="ico">💜</span><span>O Fala Comigo é uma ferramenta de apoio. Ele não substitui o acompanhamento de profissionais — funciona melhor quando família e equipe terapêutica trabalham juntas.</span></div>
+  </section>
+
+  <!-- ───────────────────────── PRIMEIROS PASSOS ───────────────────────── -->
+  <section id="primeiros-passos">
+    <h2>🚀 Primeiros passos</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>O Fala Comigo é um <strong>aplicativo web (PWA)</strong>: abre direto no navegador e pode ser instalado como um app comum, com ícone na tela inicial e tela cheia.</p>
+
+    <h3>📱 Instalar no Android</h3>
+    <ol class="steps">
+      <li>Abra <strong>falafala.com.br</strong> no Google Chrome.</li>
+      <li>Toque no menu <span class="kbd">⋮</span> no canto superior direito.</li>
+      <li>Escolha <strong>“Adicionar à tela inicial”</strong> ou <strong>“Instalar aplicativo”</strong>.</li>
+      <li>Confirme. O ícone aparecerá junto com seus outros apps.</li>
+    </ol>
+
+    <h3>🍎 Instalar no iPhone / iPad</h3>
+    <ol class="steps">
+      <li>Abra <strong>falafala.com.br</strong> no Safari.</li>
+      <li>Toque no ícone de compartilhar <span class="kbd">􀈂</span> (quadrado com seta).</li>
+      <li>Role e escolha <strong>“Adicionar à Tela de Início”</strong>.</li>
+      <li>Toque em <strong>Adicionar</strong>. Pronto!</li>
+    </ol>
+    <div class="note"><span class="ico">ℹ️</span><span>No iPhone/iPad, a instalação só funciona pelo <strong>Safari</strong> (não pelo Chrome), por limitação do iOS.</span></div>
+
+    <h3>💻 Usar no computador</h3>
+    <p>Basta abrir <strong>falafala.com.br</strong> em qualquer navegador (Chrome, Edge, Firefox, Safari). No Chrome/Edge, um ícone de instalar <span class="kbd">⊕</span> aparece na barra de endereço para instalar como aplicativo de desktop.</p>
+
+    <div class="tip"><span class="ico">📡</span><span>Após a primeira abertura com internet, o app fica salvo no dispositivo e <strong>funciona offline</strong> — ideal para usar na rua, no carro ou em locais sem sinal.</span></div>
+  </section>
+
+  <!-- ───────────────────────── COMO USAR ───────────────────────── -->
+  <section id="usar">
+    <h2>👆 Como usar no dia a dia</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+
+    <h3>Montar e falar uma frase</h3>
+    <ol class="steps">
+      <li>Escolha uma <strong>categoria</strong> nas abas coloridas (ex.: Necessidades Básicas).</li>
+      <li>Toque nos <strong>cards</strong> desejados — cada toque adiciona a palavra à barra de frase no topo e fala a palavra.</li>
+      <li>Monte a frase tocando em vários cards (ex.: “Eu” + “Quero” + “Água”).</li>
+      <li>Toque no botão <strong>🔊</strong> para ouvir a frase completa.</li>
+      <li>Toque em <strong>✕</strong> para limpar e começar de novo.</li>
+    </ol>
+    <div class="tip"><span class="ico">💡</span><span>Para remover apenas uma palavra da frase, toque sobre ela na barra de frase.</span></div>
+
+    <h3>Trocar de categoria</h3>
+    <p>Toque em qualquer aba colorida no topo para ver os cards daquela categoria. A aba ativa fica destacada na cor da categoria.</p>
+
+    <h3>Ajustes rápidos</h3>
+    <p>Toque em <strong>⚙️ Ajustes</strong> na barra inferior para abrir as configurações de voz, backup e ajuda.</p>
+  </section>
+
+  <!-- ───────────────────────── PARA PAIS ───────────────────────── -->
+  <section id="pais">
+    <h2>👨‍👩‍👧 Para Pais e Famílias</h2>
+    <span class="section-badge badge-pais">Pais e cuidadores</span>
+    <p>Você não precisa ser especialista para começar. O mais importante é <strong>usar junto, todos os dias</strong>, de forma leve e sem pressão.</p>
+
+    <h3>Por onde começar</h3>
+    <ul>
+      <li><strong>Comece pequeno</strong>: escolha 4 a 6 cards de mais interesse da criança (ex.: “Água”, “Comer”, “Brincar”, “Mais”). Excesso de opções no início pode confundir.</li>
+      <li><strong>Modele o uso</strong>: você mesmo toca nos cards enquanto fala, mostrando como se comunica. Isso se chama “modelagem” e é a forma mais poderosa de ensinar.</li>
+      <li><strong>Sem cobrança</strong>: nunca force a criança a usar. Deixe disponível e celebre cada tentativa.</li>
+      <li><strong>Use em momentos naturais</strong>: na hora da refeição, do banho, da brincadeira — situações reais ensinam mais que treinos isolados.</li>
+    </ul>
+
+    <h3>Dicas para o dia a dia</h3>
+    <div class="tip"><span class="ico">⏳</span><span><strong>Dê tempo.</strong> Depois de uma pergunta, espere de 5 a 10 segundos em silêncio. A criança pode precisar de tempo para encontrar e tocar o card.</span></div>
+    <div class="tip"><span class="ico">🎉</span><span><strong>Responda toda comunicação.</strong> Se a criança toca em “Água”, ofereça água imediatamente — mesmo que ache que ela não “quis dizer isso”. Isso mostra que comunicar funciona.</span></div>
+    <div class="tip"><span class="ico">📸</span><span><strong>Personalize com fotos reais.</strong> Adicione fotos da família, dos brinquedos e dos lugares favoritos. Cards com rostos e objetos conhecidos engajam muito mais (veja a seção <a href="#personalizar">Personalizar cards</a>).</span></div>
+
+    <h3>Mitos que atrapalham</h3>
+    <table class="tbl">
+      <tr><th>Mito</th><th>Realidade</th></tr>
+      <tr><td>“Usar o app vai impedir a fala.”</td><td>Pesquisas mostram o contrário: a CAA <strong>estimula</strong> a fala e reduz a frustração.</td></tr>
+      <tr><td>“Ele é novo demais.”</td><td>Nunca é cedo. Quanto antes começar, melhor.</td></tr>
+      <tr><td>“Ela precisa provar que merece.”</td><td>Comunicação é um direito, não uma recompensa. Deixe sempre disponível.</td></tr>
+    </table>
+    <a href="#toc" class="back-to-top">↑ Voltar ao índice</a>
+  </section>
+
+  <!-- ───────────────────────── PARA TERAPEUTAS ───────────────────────── -->
+  <section id="terapeutas">
+    <h2>🧩 Para Terapeutas</h2>
+    <span class="section-badge badge-terapeut">Fono, T.O., Psicopedagogia, Educação</span>
+    <p>Voltado a fonoaudiólogos, terapeutas ocupacionais, psicopedagogos, psicólogos e educadores especiais que usam CAA na prática clínica e escolar.</p>
+
+    <h3>Características técnicas relevantes</h3>
+    <ul>
+      <li><strong>Acervo simbólico</strong>: pictogramas do <strong>ARASAAC</strong> (símbolos esquemáticos amplamente usados em CAA) com <em>fallback</em> em emoji e suporte a símbolos Mulberry e imagens próprias.</li>
+      <li><strong>Organização por categorias semânticas</strong>: facilita a modelagem por campos vocabulares e a expansão progressiva do léxico.</li>
+      <li><strong>Construção de enunciados</strong>: barra de frase para combinação de itens, apoiando trabalho de estruturação sintática e narrativa.</li>
+      <li><strong>Saída de voz (TTS)</strong> em pt-BR com controle de velocidade e altura tonal — útil para ajustar ao processamento auditivo de cada paciente.</li>
+    </ul>
+
+    <h3>Sugestões de aplicação clínica</h3>
+    <ul>
+      <li><strong>Vocabulário nuclear (core)</strong>: priorize palavras de alta frequência e uso flexível (“quero”, “mais”, “acabou”, “ajuda”, “não”) antes de vocabulário específico (fringe).</li>
+      <li><strong>Modelagem assistida (aided language stimulation)</strong>: use o próprio app para modelar enquanto fala, criando input aumentado.</li>
+      <li><strong>Metas mensuráveis</strong>: defina alvos (ex.: número de toques espontâneos, combinações de 2 símbolos) e acompanhe a evolução.</li>
+      <li><strong>Generalização</strong>: oriente a família a replicar em casa o vocabulário trabalhado em sessão.</li>
+    </ul>
+
+    <h3>Configuração e prescrição de prancha</h3>
+    <ol class="steps">
+      <li>Monte a prancha personalizada para o paciente no <strong>Modo Editar</strong> (cards, categorias, cores e imagens).</li>
+      <li>Use <strong>Exportar configuração</strong> para gerar um arquivo <span class="kbd">.json</span> com a prancha pronta.</li>
+      <li>Envie o arquivo à família (WhatsApp, e-mail) e oriente a <strong>Importar</strong> no dispositivo da criança.</li>
+      <li>A cada evolução, atualize a prancha e reenvie — mantendo consistência entre clínica, escola e casa.</li>
+    </ol>
+    <div class="tip"><span class="ico">🧭</span><span>Padronizar a posição dos símbolos entre dispositivos favorece a <strong>memória motora</strong> e a fluência do usuário. Evite mudanças bruscas de layout.</span></div>
+    <a href="#toc" class="back-to-top">↑ Voltar ao índice</a>
+  </section>
+
+  <!-- ───────────────────────── PARA PROFISSIONAIS DE SAÚDE ───────────────────────── -->
+  <section id="saude">
+    <h2>🩺 Para Profissionais de Saúde</h2>
+    <span class="section-badge badge-saude">Médicos, enfermagem, equipe hospitalar</span>
+    <p>Para médicos, enfermeiros, dentistas e equipes de atendimento que precisam se comunicar com pacientes não-verbais ou com fala comprometida — em consultórios, prontos-socorros, internações e domicílio.</p>
+
+    <h3>Casos de uso clínico</h3>
+    <ul>
+      <li><strong>Triagem e anamnese</strong>: a categoria <strong>Necessidades Básicas</strong> inclui “Dói”, “Remédio”, “Banheiro”, “Água”, “Sim”, “Não” — apoiando relato de sintomas e queixas.</li>
+      <li><strong>Avaliação de dor e emoções</strong>: a categoria <strong>Emoções</strong> ajuda o paciente a indicar desconforto, medo ou mal-estar.</li>
+      <li><strong>Pacientes intubados ou em pós-operatório</strong>: comunicação temporária quando a fala está indisponível.</li>
+      <li><strong>Barreiras de comunicação</strong>: útil também em situações de afasia (pós-AVC) e declínio cognitivo.</li>
+    </ul>
+
+    <h3>Vantagens no ambiente de saúde</h3>
+    <ul>
+      <li><strong>Funciona offline</strong>: confiável em alas sem Wi-Fi estável.</li>
+      <li><strong>Sem coleta de dados</strong>: nada é enviado a servidores; tudo fica no dispositivo (importante para privacidade do paciente).</li>
+      <li><strong>Higienizável</strong>: usado em tablet, permite limpeza/desinfecção da superfície entre pacientes.</li>
+      <li><strong>Prancha dedicada por contexto</strong>: monte pranchas específicas (ex.: “dor”, “pré-consulta odontológica”) e importe conforme a necessidade.</li>
+    </ul>
+    <div class="warn"><span class="ico">⚠️</span><span>O Fala Comigo é uma ferramenta de <strong>apoio à comunicação</strong> e não é um dispositivo médico certificado. Não use como única fonte para decisões clínicas; confirme sempre as informações com o paciente e a equipe.</span></div>
+    <a href="#toc" class="back-to-top">↑ Voltar ao índice</a>
+  </section>
+
+  <!-- ───────────────────────── PERSONALIZAR ───────────────────────── -->
+  <section id="personalizar">
+    <h2>✏️ Personalizar cards e categorias</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>Toque em <strong>✏️ Editar</strong> na barra superior para entrar no <strong>Modo Edição</strong>. Toque em <strong>✅ Concluir</strong> para sair.</p>
+
+    <h3>Cards</h3>
+    <ul>
+      <li><strong>Adicionar</strong>: toque no card pontilhado <strong>“+ Novo card”</strong> ao final da categoria.</li>
+      <li><strong>Editar</strong>: no modo edição, toque em <strong>✏️ Editar</strong> sobre o card para mudar texto, emoji ou imagem.</li>
+      <li><strong>Mover</strong>: use <strong>↗️ Mover</strong> para enviar o card a outra categoria.</li>
+      <li><strong>Reordenar</strong>: arraste o card para a posição desejada (toque e segure no celular).</li>
+      <li><strong>Excluir</strong>: use <strong>🗑️ Excluir</strong> (ação sem desfazer).</li>
+    </ul>
+
+    <h3>Imagens — 3 fontes</h3>
+    <table class="tbl">
+      <tr><th>Fonte</th><th>Como usar</th></tr>
+      <tr><td><strong>ARASAAC ID</strong></td><td>Digite o número do pictograma (pesquise em arasaac.org).</td></tr>
+      <tr><td><strong>URL</strong></td><td>Cole o endereço de uma imagem da internet.</td></tr>
+      <tr><td><strong>Arquivo</strong></td><td>Envie uma foto do dispositivo (reduzida automaticamente para economizar espaço).</td></tr>
+    </table>
+    <div class="tip"><span class="ico">🖼️</span><span>O <strong>emoji</strong> serve de reserva: se a imagem não carregar, o emoji aparece no lugar. Sempre preencha um emoji adequado.</span></div>
+
+    <h3>Categorias</h3>
+    <ul>
+      <li><strong>Nova categoria</strong>: aba pontilhada <strong>“+ Nova”</strong> ao final das abas.</li>
+      <li><strong>Editar</strong> (✏ no canto da aba): mude nome, ícone (emoji) e cor.</li>
+      <li><strong>Excluir</strong> (✕ no canto da aba): remove a categoria e todos os seus cards.</li>
+    </ul>
+  </section>
+
+  <!-- ───────────────────────── BACKUP ───────────────────────── -->
+  <section id="backup">
+    <h2>💾 Backup: exportar e importar</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>Suas personalizações ficam salvas no dispositivo. Para não perdê-las (ou para copiar entre aparelhos), use exportar/importar em <strong>⚙️ Ajustes</strong>.</p>
+    <h3>Exportar</h3>
+    <p>Toque em <strong>📤 Exportar configuração</strong>. Um arquivo <span class="kbd">fala-comigo-AAAA-MM-DD.json</span> é gerado. No celular, abre o menu de compartilhamento (WhatsApp, e-mail, arquivos); no computador, baixa direto.</p>
+    <h3>Importar</h3>
+    <p>Toque em <strong>📥 Importar configuração</strong>, escolha um arquivo <span class="kbd">.json</span> exportado e confirme.</p>
+    <div class="warn"><span class="ico">⚠️</span><span>Importar <strong>substitui todos</strong> os dados atuais. Exporte um backup antes, se quiser preservar a configuração existente.</span></div>
+    <div class="tip"><span class="ico">🔁</span><span>Ideal para terapeutas: monte a prancha uma vez, exporte e distribua a mesma configuração para vários pacientes ou dispositivos.</span></div>
+  </section>
+
+  <!-- ───────────────────────── VOZ ───────────────────────── -->
+  <section id="voz">
+    <h2>🔊 Voz e acessibilidade</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <h3>Configurações de voz (em ⚙️ Ajustes)</h3>
+    <ul>
+      <li><strong>Falar ao tocar</strong>: liga/desliga a fala imediata ao tocar cada card.</li>
+      <li><strong>Velocidade da voz</strong>: de 0,5× (mais lenta) a 1,5× (mais rápida).</li>
+      <li><strong>Tom da voz</strong>: do grave ao agudo.</li>
+    </ul>
+    <div class="note"><span class="ico">ℹ️</span><span>A voz usa o sintetizador do próprio dispositivo (Web Speech API). A qualidade e o sotaque dependem das vozes em Português instaladas no aparelho. Em alguns dispositivos é possível baixar vozes pt-BR de melhor qualidade nas configurações do sistema.</span></div>
+    <h3>Acessibilidade</h3>
+    <ul>
+      <li><strong>Navegação por teclado</strong>: cards são focáveis e acionáveis com <span class="kbd">Tab</span> e <span class="kbd">Enter</span>/<span class="kbd">Espaço</span>.</li>
+      <li><strong>Rótulos ARIA</strong> e estrutura semântica para leitores de tela.</li>
+      <li><strong>Alvos de toque grandes</strong> e alto contraste, pensados para coordenação motora em desenvolvimento.</li>
+    </ul>
+  </section>
+
+  <!-- ───────────────────────── PRIVACIDADE ───────────────────────── -->
+  <section id="privacidade">
+    <h2>🔒 Privacidade e dados</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <ul>
+      <li><strong>Tudo fica no seu dispositivo.</strong> Cards, fotos e configurações são salvos localmente (armazenamento do navegador). Nada é enviado a servidores.</li>
+      <li><strong>Sem cadastro, sem rastreamento, sem anúncios.</strong> Não coletamos dados pessoais.</li>
+      <li><strong>As fotos que você adiciona</strong> ficam apenas no aparelho. Para movê-las a outro dispositivo, use exportar/importar.</li>
+      <li><strong>Atenção:</strong> limpar os dados do navegador ou desinstalar o app apaga as personalizações. Faça backups regulares.</li>
+    </ul>
+  </section>
+
+  <!-- ───────────────────────── FAQ ───────────────────────── -->
+  <section id="faq">
+    <h2>❓ Perguntas frequentes</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+
+    <details class="faq"><summary>O aplicativo é gratuito?</summary><p>Sim, totalmente gratuito, sem anúncios e sem compras dentro do app.</p></details>
+    <details class="faq"><summary>Preciso de internet para usar?</summary><p>Só na primeira abertura. Depois, o app funciona offline. Imagens novas da internet (ARASAAC/URL) precisam de conexão para carregar pela primeira vez.</p></details>
+    <details class="faq"><summary>A voz não funciona. O que faço?</summary><p>Verifique se há vozes em Português instaladas no dispositivo e se o volume não está no mudo. Em alguns navegadores a fala só funciona após o primeiro toque na tela. Tente também fechar e reabrir o app.</p></details>
+    <details class="faq"><summary>Perdi minhas personalizações. Como recuperar?</summary><p>Se tiver um arquivo exportado (.json), use <strong>Importar configuração</strong>. Sem backup, não é possível recuperar — por isso recomendamos exportar com frequência.</p></details>
+    <details class="faq"><summary>Posso usar a mesma prancha em vários aparelhos?</summary><p>Sim. Exporte no primeiro aparelho e importe nos demais.</p></details>
+    <details class="faq"><summary>Como volto tudo ao estado original?</summary><p>Em ⚙️ Ajustes, use <strong>🔄 Restaurar dados padrão</strong>. Atenção: isso apaga todas as personalizações.</p></details>
+    <details class="faq"><summary>Funciona em qualquer celular?</summary><p>Funciona em navegadores modernos (Chrome no Android, Safari no iPhone/iPad) e em computadores. Recursos de voz dependem do dispositivo.</p></details>
+  </section>
+
+  <!-- ───────────────────────── CRÉDITOS ───────────────────────── -->
+  <section id="creditos">
+    <h2>📜 Créditos e licenças</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <h3>Pictogramas ARASAAC</h3>
+    <p>Os símbolos pictográficos são do portal <strong>ARASAAC</strong> (Centro Aragonês de Comunicação Aumentativa e Alternativa, Governo de Aragão, Espanha).</p>
+    <ul>
+      <li><strong>Autor</strong>: Sergio Palao</li>
+      <li><strong>Licença</strong>: Creative Commons BY-NC-SA 4.0</li>
+      <li><strong>Origem</strong>: <a href="https://arasaac.org">arasaac.org</a></li>
+    </ul>
+    <h3>Símbolos Mulberry</h3>
+    <p>Alguns símbolos são do conjunto <strong>Mulberry Symbols</strong>, licenciados sob Creative Commons BY-SA 2.0 UK.</p>
+    <hr class="divider">
+    <p style="font-size:13px;color:var(--text-muted);">Fala Comigo é um aplicativo de código aberto. As personalizações, fotos e dados pertencem a você e permanecem no seu dispositivo.</p>
+  </section>
+</div>
+
+<footer id="doc-footer">
+  <div class="love">Criado com amor para pessoas especiais 💜</div>
+  <div class="meta">
+    Fala Comigo — Comunicação Aumentativa e Alternativa ·
+    <a href="index.html">Abrir o aplicativo</a>
+  </div>
+</footer>
+
+<script>
+// ── Download offline: salva uma cópia autocontida desta página ──
+document.getElementById('btn-download').addEventListener('click', () => {
+  // Serializa o documento atual (HTML + CSS embutido) — 100% offline
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html' });
+  const file = new File([blob], 'fala-comigo-documentacao.html', { type: 'text/html' });
+
+  // Mobile: usa compartilhamento se disponível (salvar em Arquivos, enviar, etc.)
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    navigator.share({ files: [file], title: 'Documentação — Fala Comigo' })
+      .catch(err => { if (err.name !== 'AbortError') downloadDoc(blob); });
+    return;
+  }
+  downloadDoc(blob);
+});
+
+function downloadDoc(blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fala-comigo-documentacao.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+}
+</script>
+</body>
+</html>

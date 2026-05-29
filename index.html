@@ -51,6 +51,12 @@ body {
   display: flex; align-items: center; gap: 4px;
 }
 #btn-edit.active { background: var(--amber-light); color: var(--amber); }
+#btn-help {
+  text-decoration: none; font-size: 18px; line-height: 1;
+  padding: 6px 8px; border-radius: 12px; color: var(--text-muted);
+  transition: background 0.15s; display: flex; align-items: center;
+}
+#btn-help:active { background: var(--purple-light); }
 
 /* ── SENTENCE BAR ── */
 #sentence-wrap {
@@ -329,6 +335,7 @@ body.edit-mode .card-add { display: flex; }
 <div id="topbar">
   <h1>Fala <span>Comigo</span> 💬</h1>
   <div style="font-size:12px;color:var(--text-muted);font-weight:700;">CAA</div>
+  <a id="btn-help" href="documentacao.html" title="Ajuda e documentação" aria-label="Abrir ajuda e documentação">❔</a>
   <button id="btn-edit" title="Modo edição" aria-label="Ativar modo edição">✏️ Editar</button>
 </div>
 
@@ -391,6 +398,13 @@ body.edit-mode .card-add { display: flex; }
     </div>
     <span style="font-size:20px;">🔄</span>
   </div>
+  <a class="setting-row" href="documentacao.html" style="cursor:pointer;text-decoration:none;color:inherit;" id="btn-help-row">
+    <div>
+      <label style="cursor:pointer;">Ajuda e documentação</label>
+      <p>Guia para pais, terapeutas e profissionais · funciona offline</p>
+    </div>
+    <span style="font-size:20px;">📖</span>
+  </a>
 </div>
 
 <div id="bottom-nav" role="navigation" aria-label="Menu principal">

@@ -1,7 +1,8 @@
-const CACHE_VERSION = 'fala-comigo-v2';
+const CACHE_VERSION = 'fala-comigo-v3';
 const APP_ASSETS = [
   './',
   './index.html',
+  './documentacao.html',
   './manifest.json',
   'https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap'
 ];

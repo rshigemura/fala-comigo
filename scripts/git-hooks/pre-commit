@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# ─────────────────────────────────────────────────────────────────────────────
+# Fala Comigo — Git pre-commit hook
+# Garante que a documentação seja revisada quando o aplicativo muda.
+# Bloqueia o commit se index.html foi alterado mas documentacao.html não.
+#
+# Instale com:  bash scripts/install-hooks.sh
+# ─────────────────────────────────────────────────────────────────────────────
+staged=$(git diff --cached --name-only)
+
+app_changed=$(printf '%s\n' "$staged" | grep -E '(^|/)index\.html$' || true)
+docs_changed=$(printf '%s\n' "$staged" | grep -E '(^|/)documentacao\.html$' || true)
+
+if [ -n "$app_changed" ] && [ -z "$docs_changed" ]; then
+  echo ""
+  echo "  ⚠️  Fala Comigo — verificação de documentação"
+  echo "  ─────────────────────────────────────────────"
+  echo "  O aplicativo (index.html) foi alterado, mas documentacao.html NÃO."
+  echo "  Reveja a documentação e atualize-a se necessário."
+  echo ""
+  echo "  • Para atualizar:  edite documentacao.html e rode 'git add documentacao.html'"
+  echo "    (se a doc mudar, lembre-se de incrementar CACHE_VERSION em sw.js)"
+  echo "  • Se a mudança NÃO afeta a documentação, confirme com:"
+  echo "      git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+exit 0
