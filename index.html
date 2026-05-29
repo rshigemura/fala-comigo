@@ -52,11 +52,13 @@ body {
 }
 #btn-edit.active { background: var(--amber-light); color: var(--amber); }
 #btn-help {
-  text-decoration: none; font-size: 18px; line-height: 1;
-  padding: 6px 8px; border-radius: 12px; color: var(--text-muted);
-  transition: background 0.15s; display: flex; align-items: center;
+  text-decoration: none; font-size: 13px; font-weight: 800; line-height: 1;
+  padding: 7px 12px; border-radius: 12px; color: #fff;
+  background: var(--purple); box-shadow: var(--shadow-active);
+  transition: transform 0.12s, background 0.15s;
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
 }
-#btn-help:active { background: var(--purple-light); }
+#btn-help:active { background: var(--purple-dark); transform: scale(0.96); }
 
 /* ── SENTENCE BAR ── */
 #sentence-wrap {
@@ -335,7 +337,7 @@ body.edit-mode .card-add { display: flex; }
 <div id="topbar">
   <h1>Fala <span>Comigo</span> 💬</h1>
   <div style="font-size:12px;color:var(--text-muted);font-weight:700;">CAA</div>
-  <a id="btn-help" href="documentacao.html" title="Ajuda e documentação" aria-label="Abrir ajuda e documentação">❔</a>
+  <a id="btn-help" href="documentacao.html" title="Ajuda e documentação" aria-label="Abrir ajuda e documentação">❔ Ajuda</a>
   <button id="btn-edit" title="Modo edição" aria-label="Ativar modo edição">✏️ Editar</button>
 </div>
 
@@ -1410,5 +1412,9 @@ renderTabs();
 renderCards();
 setTimeout(() => { voices = window.speechSynthesis.getVoices(); }, 500);
 </script>
+<!-- ── GoatCounter — contagem de visitas anônima, sem cookies, sem dados pessoais ──
+     Painel: https://falafala.goatcounter.com · Não cacheado pelo Service Worker. -->
+<script data-goatcounter="https://falafala.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

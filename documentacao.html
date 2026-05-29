@@ -208,6 +208,8 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
       <li><a href="#voz">🔊 Voz e acessibilidade</a></li>
       <li><a href="#privacidade">🔒 Privacidade e dados</a></li>
       <li><a href="#faq">❓ Perguntas frequentes</a></li>
+      <li><a href="#problemas">🔧 Problemas frequentes e soluções</a></li>
+      <li><a href="#suporte">📬 Suporte e contato</a></li>
       <li><a href="#creditos">📜 Créditos e licenças</a></li>
     </ul>
   </nav>
@@ -438,7 +440,8 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
     <span class="section-badge badge-todos">Para todos</span>
     <ul>
       <li><strong>Tudo fica no seu dispositivo.</strong> Cards, fotos e configurações são salvos localmente (armazenamento do navegador). Nada é enviado a servidores.</li>
-      <li><strong>Sem cadastro, sem rastreamento, sem anúncios.</strong> Não coletamos dados pessoais.</li>
+      <li><strong>Sem cadastro e sem anúncios.</strong> Não coletamos dados pessoais e não usamos cookies de rastreamento.</li>
+      <li><strong>Contagem de visitas anônima.</strong> Usamos uma medição agregada que respeita a privacidade (GoatCounter) apenas para saber quantas pessoas acessam o site. Ela <strong>não usa cookies</strong>, não identifica você e não acompanha o que você faz dentro do app — suas frases, cards e fotos nunca saem do dispositivo.</li>
       <li><strong>As fotos que você adiciona</strong> ficam apenas no aparelho. Para movê-las a outro dispositivo, use exportar/importar.</li>
       <li><strong>Atenção:</strong> limpar os dados do navegador ou desinstalar o app apaga as personalizações. Faça backups regulares.</li>
     </ul>
@@ -456,6 +459,38 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
     <details class="faq"><summary>Posso usar a mesma prancha em vários aparelhos?</summary><p>Sim. Exporte no primeiro aparelho e importe nos demais.</p></details>
     <details class="faq"><summary>Como volto tudo ao estado original?</summary><p>Em ⚙️ Ajustes, use <strong>🔄 Restaurar dados padrão</strong>. Atenção: isso apaga todas as personalizações.</p></details>
     <details class="faq"><summary>Funciona em qualquer celular?</summary><p>Funciona em navegadores modernos (Chrome no Android, Safari no iPhone/iPad) e em computadores. Recursos de voz dependem do dispositivo.</p></details>
+  </section>
+
+  <!-- ───────────────────────── PROBLEMAS E SOLUÇÕES ───────────────────────── -->
+  <section id="problemas">
+    <h2>🔧 Problemas frequentes e soluções</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>Se algo não estiver funcionando como esperado, veja abaixo as soluções para os problemas mais comuns. Se nada resolver, fale com a gente pelo <a href="#suporte">suporte</a>.</p>
+
+    <details class="faq"><summary>🔊 A voz não fala ou sai sem som</summary><p>1) Confira se o volume do aparelho não está no mudo ou muito baixo. 2) Toque uma vez na tela antes — alguns navegadores só liberam a fala após a primeira interação. 3) Verifique se há <strong>vozes em Português</strong> instaladas no sistema (em Ajustes do celular → Acessibilidade → Conversão de texto em voz). 4) Feche e reabra o app. No iPhone/iPad, confira se o botão lateral de silencioso não está ativado.</p></details>
+
+    <details class="faq"><summary>📲 Não consigo instalar o app na tela inicial</summary><p>No <strong>Android (Chrome)</strong>: toque no menu ⋮ → “Adicionar à tela inicial” / “Instalar app”. No <strong>iPhone/iPad (Safari)</strong>: toque no botão Compartilhar (quadrado com seta) → “Adicionar à Tela de Início”. A instalação precisa ser feita pelo Safari no iOS — outros navegadores não oferecem essa opção.</p></details>
+
+    <details class="faq"><summary>🖼️ As imagens dos cards não aparecem</summary><p>Imagens do ARASAAC ou de uma URL precisam de internet para carregar <strong>na primeira vez</strong>; depois ficam salvas para uso offline. Se um card ficou sem imagem, confirme que está online e reabra o app. Quando a imagem não carrega, o app mostra um emoji no lugar — você pode editar o card e escolher outra imagem ou um emoji.</p></details>
+
+    <details class="faq"><summary>📡 O app não abre quando estou sem internet</summary><p>O funcionamento offline só fica disponível <strong>depois da primeira visita com internet</strong>, quando o app é salvo no dispositivo. Abra-o uma vez conectado e, se possível, instale-o na tela inicial. Se mesmo assim não abrir offline, pode ser que os dados do navegador tenham sido limpos — basta abrir de novo com internet.</p></details>
+
+    <details class="faq"><summary>🔄 Atualizei o app mas continua na versão antiga</summary><p>O app guarda uma cópia para funcionar offline. Para forçar a versão nova: feche todas as abas/janelas do app e reabra; ou puxe a tela para baixo para recarregar. Em último caso, recarregue ignorando o cache. Suas personalizações <strong>não</strong> são perdidas nesse processo.</p></details>
+
+    <details class="faq"><summary>😟 Sumiram meus cards e personalizações</summary><p>Isso acontece quando os dados do navegador são limpos ou o app é desinstalado. Se você tiver um arquivo de backup <span class="kbd">.json</span>, use <strong>Importar configuração</strong> para recuperar tudo. Sem backup não é possível recuperar — por isso recomendamos <strong>exportar com frequência</strong> (veja <a href="#backup">Backup</a>).</p></details>
+
+    <details class="faq"><summary>📤 Ao exportar no iPhone, salva como arquivo de texto</summary><p>Use a opção de <strong>compartilhar</strong> que aparece e escolha “Salvar em Arquivos”. O arquivo deve terminar em <span class="kbd">.json</span>. Se ainda assim vier como texto, abra o app pelo Safari (não pela tela inicial) e tente novamente. Na importação, selecione apenas arquivos <span class="kbd">.json</span>.</p></details>
+
+    <details class="faq"><summary>🐢 O app está lento ou travando</summary><p>Feche outras abas e apps abertos, reinicie o navegador e, se usar muitas fotos próprias, considere reduzir a quantidade — fotos muito grandes ocupam mais memória. Reabrir o aparelho costuma resolver lentidões temporárias.</p></details>
+  </section>
+
+  <!-- ───────────────────────── SUPORTE E CONTATO ───────────────────────── -->
+  <section id="suporte">
+    <h2>📬 Suporte e contato</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>Não encontrou a resposta que procurava, achou um problema ou quer enviar uma sugestão? Fale com a gente:</p>
+    <p style="font-size:17px;"><strong>✉️ E-mail de suporte:</strong> <a href="mailto:ajuda@falafala.com.br">ajuda@falafala.com.br</a></p>
+    <p style="font-size:13px;color:var(--text-muted);">Respondemos com o maior carinho. Ao relatar um problema, conte qual aparelho e navegador você usa (ex.: iPhone com Safari, Android com Chrome) — isso ajuda muito a entender e resolver.</p>
   </section>
 
   <!-- ───────────────────────── CRÉDITOS ───────────────────────── -->
@@ -480,7 +515,8 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
   <div class="love">Criado com amor para pessoas especiais 💜</div>
   <div class="meta">
     Fala Comigo — Comunicação Aumentativa e Alternativa ·
-    <a href="index.html">Abrir o aplicativo</a>
+    <a href="index.html">Abrir o aplicativo</a> ·
+    <a href="mailto:ajuda@falafala.com.br">ajuda@falafala.com.br</a>
   </div>
 </footer>
 

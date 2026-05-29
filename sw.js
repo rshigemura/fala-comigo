@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'fala-comigo-v3';
+const CACHE_VERSION = 'fala-comigo-v4';
 const APP_ASSETS = [
   './',
   './index.html',
@@ -27,6 +27,12 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
+
+  // Não interferir na contagem de visitas (GoatCounter): deixa ir direto à rede,
+  // sem cache. Mantém a medição funcionando e evita erros de cache.
+  if (url.hostname === 'gc.zgo.at' || url.hostname.endsWith('.goatcounter.com')) {
+    return; // segue o fluxo normal do navegador
+  }
 
   // Cache-first para pictogramas ARASAAC (imagens externas que não mudam)
   if (url.hostname === 'static.arasaac.org') {
