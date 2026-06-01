@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6C63FF; --purple-dark:#4A43D4;
+    --coral:#FF6B6B; --teal:#00BFA5; --amber:#FFA726; --green:#66BB6A;
+    --ink:#2D2D3A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1350px;}
+  body{
+    font-family:'Nunito',-apple-system,sans-serif;
+    background:linear-gradient(160deg,#6C63FF 0%,#5B52F0 48%,#4A43D4 100%);
+    position:relative; overflow:hidden; color:#fff;
+  }
+  .blob{position:absolute;border-radius:50%;opacity:.4;}
+  .b1{width:360px;height:360px;background:var(--coral);top:-110px;right:-90px;opacity:.45;}
+  .b2{width:280px;height:280px;background:var(--teal);bottom:-90px;left:-80px;opacity:.4;}
+  .b3{width:140px;height:140px;background:var(--amber);top:520px;left:54px;opacity:.45;}
+  .b4{width:100px;height:100px;background:var(--green);top:360px;right:70px;opacity:.5;}
+
+  .stage{position:relative;z-index:2;height:100%;padding:60px 80px;display:flex;flex-direction:column;}
+
+  .badge{
+    align-self:flex-start;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);
+    color:#fff;font-weight:800;font-size:26px;letter-spacing:2px;
+    padding:14px 30px;border-radius:999px;text-transform:uppercase;
+  }
+
+  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:38px;}
+  .logo{
+    width:158px;height:158px;border-radius:40px;background:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:92px;
+    box-shadow:0 18px 46px rgba(0,0,0,.24);
+  }
+  .title{font-size:94px;font-weight:900;line-height:1;letter-spacing:-2px;margin-top:26px;}
+  .title span{color:#FFD3D3;}
+  .kicker{font-size:32px;font-weight:800;color:#FFE08A;margin-top:12px;}
+
+  .tagline{font-size:35px;font-weight:700;line-height:1.32;margin-top:34px;text-align:center;}
+  .tagline b{color:#fff;}
+
+  .card{
+    margin-top:36px;background:#fff;border-radius:34px;padding:34px 44px;
+    box-shadow:0 20px 50px rgba(0,0,0,.22);color:var(--ink);
+  }
+  .feat{display:flex;align-items:center;gap:20px;font-size:32px;font-weight:800;padding:12px 0;}
+  .feat .ico{font-size:38px;width:52px;text-align:center;flex-shrink:0;}
+  .feat + .feat{border-top:2px solid #F0F0F6;}
+
+  .footer{margin-top:auto;padding-top:24px;display:flex;flex-direction:column;align-items:center;gap:20px;}
+  .cta{
+    background:#FF6B6B;color:#fff;font-weight:900;font-size:46px;letter-spacing:.5px;
+    padding:26px 52px;border-radius:999px;box-shadow:0 14px 34px rgba(255,107,107,.5);
+    display:flex;align-items:center;gap:16px;
+  }
+  .love{font-size:26px;font-weight:800;color:rgba(255,255,255,.92);text-align:center;}
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="blob b3"></div><div class="blob b4"></div>
+
+  <div class="stage">
+    <div class="badge">🚀 No ar · 100% gratuito</div>
+
+    <div class="hero">
+      <div class="logo">💬</div>
+      <div class="title">Fala <span>Comigo</span></div>
+      <div class="kicker">Comunicação que dá voz a você</div>
+    </div>
+
+    <div class="tagline">Um app de <b>Comunicação Aumentativa e Alternativa</b> para quem se comunica de formas diferentes. Toque nos símbolos e o app fala por você.</div>
+
+    <div class="card">
+      <div class="feat"><span class="ico">🔊</span> Fala em voz alta, em Português</div>
+      <div class="feat"><span class="ico">🧩</span> Pranchas com pictogramas</div>
+      <div class="feat"><span class="ico">✏️</span> Personalize cards e categorias</div>
+      <div class="feat"><span class="ico">📲</span> Funciona offline, instala no celular</div>
+      <div class="feat"><span class="ico">🔒</span> Sem anúncios e sem rastreamento</div>
+    </div>
+
+    <div class="footer">
+      <div class="cta">🌐 falafala.com.br</div>
+      <div class="love">Criado com amor para pessoas especiais 💜</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6B6B; --teal:#00BFA5; --amber:#FFA726; --green:#66BB6A;
+    --ink:#2D2D3A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1200px;height:630px;}
+  body{
+    font-family:'Nunito',-apple-system,sans-serif;
+    background:linear-gradient(135deg,#6C63FF 0%,#5B52F0 50%,#4A43D4 100%);
+    position:relative; overflow:hidden; color:#fff;
+  }
+  .blob{position:absolute;border-radius:50%;opacity:.4;}
+  .b1{width:300px;height:300px;background:var(--coral);top:-90px;right:-70px;opacity:.4;}
+  .b2{width:200px;height:200px;background:var(--teal);bottom:-70px;left:-50px;opacity:.4;}
+  .b3{width:90px;height:90px;background:var(--amber);bottom:60px;right:140px;opacity:.5;}
+
+  .stage{position:relative;z-index:2;height:100%;padding:56px 60px;display:flex;gap:54px;align-items:center;}
+
+  .left{flex:1;display:flex;flex-direction:column;height:100%;justify-content:center;}
+  .badge{
+    align-self:flex-start;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);
+    color:#fff;font-weight:800;font-size:19px;letter-spacing:1.5px;
+    padding:9px 20px;border-radius:999px;text-transform:uppercase;
+  }
+  .hero{display:flex;align-items:center;gap:22px;margin-top:24px;}
+  .logo{
+    width:104px;height:104px;border-radius:28px;background:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:60px;
+    box-shadow:0 12px 30px rgba(0,0,0,.22);flex-shrink:0;
+  }
+  .title{font-size:62px;font-weight:900;line-height:.98;letter-spacing:-1.5px;}
+  .title span{color:#FFD3D3;}
+  .kicker{font-size:23px;font-weight:800;color:#FFE08A;margin-top:6px;}
+  .tagline{font-size:25px;font-weight:700;line-height:1.32;margin-top:26px;max-width:520px;}
+  .tagline b{color:#fff;}
+  .cta{
+    align-self:flex-start;margin-top:30px;background:#FF6B6B;color:#fff;font-weight:900;font-size:30px;
+    padding:16px 34px;border-radius:999px;box-shadow:0 10px 26px rgba(255,107,107,.5);
+    display:flex;align-items:center;gap:12px;
+  }
+
+  .card{
+    width:430px;background:#fff;border-radius:28px;padding:32px 34px;
+    box-shadow:0 16px 42px rgba(0,0,0,.22);color:var(--ink);
+  }
+  .feat{display:flex;align-items:center;gap:16px;font-size:24px;font-weight:800;padding:11px 0;}
+  .feat .ico{font-size:30px;width:42px;text-align:center;flex-shrink:0;}
+  .feat + .feat{border-top:2px solid #F0F0F6;}
+  .love{margin-top:18px;text-align:center;font-size:17px;font-weight:800;color:#7B7B9A;}
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <div class="stage">
+    <div class="left">
+      <div class="badge">🚀 No ar · 100% gratuito</div>
+      <div class="hero">
+        <div class="logo">💬</div>
+        <div>
+          <div class="title">Fala <span>Comigo</span></div>
+          <div class="kicker">Comunicação que dá voz a você</div>
+        </div>
+      </div>
+      <div class="tagline">App de <b>Comunicação Aumentativa e Alternativa (CAA)</b> para quem se comunica de formas diferentes. Toque nos símbolos e o app fala por você.</div>
+      <div class="cta">🌐 falafala.com.br</div>
+    </div>
+
+    <div class="card">
+      <div class="feat"><span class="ico">🔊</span> Fala em voz alta, em Português</div>
+      <div class="feat"><span class="ico">🧩</span> Pranchas com pictogramas</div>
+      <div class="feat"><span class="ico">✏️</span> Personalize cards e categorias</div>
+      <div class="feat"><span class="ico">📲</span> Funciona offline no celular</div>
+      <div class="feat"><span class="ico">🔒</span> Sem anúncios e sem rastreamento</div>
+      <div class="love">Criado com amor para pessoas especiais 💜</div>
+    </div>
+  </div>
+</body>
+</html>
