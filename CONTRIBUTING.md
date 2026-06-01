@@ -6,6 +6,9 @@ livre, gratuito para sempre**. Toda contribuição é bem-vinda. 💜
 
 ## 📜 Licença das contribuições
 
+Ao participar, você concorda em seguir o nosso
+[Código de Conduta](CODE_OF_CONDUCT.md).
+
 O projeto é licenciado sob a **GNU AGPL-3.0** (veja [`LICENSE`](LICENSE)).
 
 Ao enviar uma contribuição (código, documentação, correções, traduções), você

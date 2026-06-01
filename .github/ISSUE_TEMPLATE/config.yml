@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: ✉️ Suporte por e-mail
+    url: mailto:ajuda@falafala.com.br
+    about: Para dúvidas, ajuda ou contato em particular.
+  - name: 📖 Documentação
+    url: https://falafala.com.br/documentacao.html
+    about: Guia para pais, terapeutas e profissionais (também funciona offline).
