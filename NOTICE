@@ -1,0 +1,60 @@
+Fala Comigo — Comunicação Aumentativa e Alternativa (CAA)
+Copyright (C) 2026 Rafael Shigemura
+
+Este produto é software livre, distribuído sob a GNU Affero General Public
+License v3.0 (AGPL-3.0). Veja o arquivo LICENSE para o texto completo.
+Código-fonte: https://github.com/rshigemura/fala-comigo
+
+O arquivo NOTICE reúne as atribuições de terceiros incorporadas ou utilizadas
+pelo Fala Comigo. As licenças abaixo se aplicam APENAS aos respectivos
+materiais de terceiros, não ao código do Fala Comigo (que é AGPL-3.0).
+
+================================================================================
+1. Pictogramas — ARASAAC
+================================================================================
+Símbolos pictográficos do portal ARASAAC (Centro Aragonês de Comunicação
+Aumentativa e Alternativa, Governo de Aragão, Espanha).
+
+  Autor:    Sergio Palao
+  Origem:   https://arasaac.org
+  Licença:  Creative Commons BY-NC-SA 4.0
+            https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+  Atenção: a cláusula NC (NonCommercial) significa que estes símbolos NÃO
+  podem ser utilizados para fins comerciais. A cláusula SA (ShareAlike) exige
+  que adaptações sejam distribuídas sob a mesma licença, com atribuição.
+
+================================================================================
+2. Símbolos — Mulberry Symbols
+================================================================================
+Alguns símbolos pertencem ao conjunto Mulberry Symbols.
+
+  Origem:   https://mulberrysymbols.org
+  Licença:  Creative Commons BY-SA 2.0 UK
+            https://creativecommons.org/licenses/by-sa/2.0/uk/
+
+================================================================================
+3. Tipografia — Nunito
+================================================================================
+Fonte Nunito, carregada via Google Fonts.
+
+  Autores:  Vernon Adams, Cyreal, Jacques Le Bailly
+  Licença:  SIL Open Font License 1.1 (OFL-1.1)
+            https://scripts.sil.org/OFL
+
+================================================================================
+4. Tecnologias de plataforma (sem incorporação de código)
+================================================================================
+- Web Speech API (síntese de voz): recurso nativo do navegador/dispositivo.
+- Cloudflare (DNS) e GitHub Pages (hospedagem): infraestrutura, sem código
+  incorporado ao app.
+- GoatCounter (contagem de visitas anônima e agregada): serviço externo,
+  carregado em tempo de execução; não há código de terceiros incorporado ao
+  repositório.
+
+================================================================================
+Marca e identidade
+================================================================================
+O nome "Fala Comigo", o logotipo e a identidade visual são de titularidade do
+autor e NÃO são licenciados sob a AGPL-3.0. Não os utilize de forma que sugira
+endosso oficial ou que possa confundir os usuários.
