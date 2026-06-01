@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'fala-comigo-v4';
+const CACHE_VERSION = 'fala-comigo-v5';
 const APP_ASSETS = [
   './',
   './index.html',

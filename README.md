@@ -105,4 +105,37 @@ Ao atualizar a documentação, lembre-se de incrementar o `CACHE_VERSION` em `sw
 
 ---
 
+## 📄 Licença e direitos
+
+**Copyright © 2026 Rafael Shigemura.**
+
+O **Fala Comigo** é software livre, licenciado sob a **GNU Affero General Public
+License v3.0 (AGPL-3.0)** — veja o arquivo [`LICENSE`](LICENSE).
+
+### 💜 Compromisso: gratuito e livre para sempre
+
+Este aplicativo é e sempre será **gratuito e livre** para uso. A licença AGPL-3.0
+garante isso de forma irrevogável:
+
+- Qualquer pessoa pode usar, estudar, copiar e modificar o código.
+- Qualquer versão modificada — inclusive quando **hospedada como serviço na web** —
+  **deve disponibilizar o código-fonte** sob a mesma licença AGPL-3.0.
+- Isso torna **impossível** transformar o Fala Comigo (ou um derivado) em um produto
+  fechado e proprietário. A versão livre nunca pode ser "trancada".
+
+### Marca e identidade
+
+O nome **"Fala Comigo"**, o logotipo e a identidade visual são de titularidade do
+autor e **não** são cobertos pela licença de software. Não os utilize de forma que
+sugira endosso oficial ou que possa confundir os usuários.
+
+### Pictogramas (ARASAAC)
+
+Os pictogramas são do portal **ARASAAC**, sob **Creative Commons BY-NC-SA 4.0**
+(autor: Sergio Palao · https://arasaac.org). A cláusula **NC (NonCommercial)**
+significa que **usos comerciais desses símbolos não são permitidos** pela licença do
+ARASAAC. Alguns símbolos são do conjunto **Mulberry Symbols** (CC BY-SA 2.0 UK).
+
+---
+
 Criado com amor para pessoas especiais 💜
