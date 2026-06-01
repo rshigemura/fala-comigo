@@ -146,6 +146,25 @@ section a { color: var(--purple); font-weight: 700; }
 }
 .divider { height: 1px; background: #EAEAEF; margin: 18px 0; border: none; }
 
+/* ── FLYERS / DIVULGAÇÃO ── */
+.flyers { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; margin: 16px 0; }
+.flyer-card {
+  background: var(--bg); border: 1px solid #EAEAEF; border-radius: 16px;
+  padding: 14px; display: flex; flex-direction: column; gap: 9px;
+}
+.flyer-card .thumb {
+  width: 100%; height: auto; border-radius: 10px; background: #fff;
+  box-shadow: var(--shadow); display: block;
+}
+.flyer-card .fname { font-size: 14px; font-weight: 800; color: var(--text); }
+.flyer-card .fmeta { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-top: -4px; }
+.flyer-dl {
+  margin-top: auto; background: var(--purple); color: #fff !important; text-decoration: none;
+  font-weight: 800; font-size: 13px; text-align: center; padding: 10px 12px; border-radius: 10px;
+  transition: transform 0.12s, background 0.15s;
+}
+.flyer-dl:active { transform: scale(0.96); background: var(--purple-dark); }
+
 table.tbl { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
 table.tbl th, table.tbl td { text-align: left; padding: 9px 12px; border-bottom: 1px solid #EAEAEF; }
 table.tbl th { font-weight: 800; color: var(--purple-dark); background: var(--purple-light); }
@@ -218,6 +237,7 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
       <li><a href="#faq">❓ Perguntas frequentes</a></li>
       <li><a href="#problemas">🔧 Problemas frequentes e soluções</a></li>
       <li><a href="#suporte">📬 Suporte e contato</a></li>
+      <li><a href="#divulgar">📢 Ajude a divulgar</a></li>
       <li><a href="#creditos">📜 Créditos e licenças</a></li>
     </ul>
   </nav>
@@ -499,6 +519,57 @@ details.faq p { padding-bottom: 12px; font-size: 14.5px; }
     <p>Não encontrou a resposta que procurava, achou um problema ou quer enviar uma sugestão? Fale com a gente:</p>
     <p style="font-size:17px;"><strong>✉️ E-mail de suporte:</strong> <a href="mailto:ajuda@falafala.com.br">ajuda@falafala.com.br</a></p>
     <p style="font-size:13px;color:var(--text-muted);">Respondemos com o maior carinho. Ao relatar um problema, conte qual aparelho e navegador você usa (ex.: iPhone com Safari, Android com Chrome) — isso ajuda muito a entender e resolver.</p>
+  </section>
+
+  <!-- ───────────────────────── DIVULGAÇÃO ───────────────────────── -->
+  <section id="divulgar">
+    <h2>📢 Ajude a divulgar</h2>
+    <span class="section-badge badge-todos">Para todos</span>
+    <p>O Fala Comigo cresce no boca a boca de quem acredita em comunicação para todos. Se você quiser ajudar a alcançar mais famílias, terapeutas e escolas, preparamos materiais prontos para você compartilhar. 💜</p>
+    <p>Baixe a arte no formato ideal para cada rede e poste com a legenda que quiser:</p>
+
+    <div class="flyers">
+      <div class="flyer-card">
+        <img class="thumb" src="marketing/thumbs/flyer-square.png" alt="Flyer quadrado do Fala Comigo" loading="lazy" width="640">
+        <div class="fname">Quadrado</div>
+        <div class="fmeta">1080×1080 · Instagram, Facebook, LinkedIn</div>
+        <a class="flyer-dl" href="marketing/flyer-square.png" download>⬇️ Baixar</a>
+      </div>
+      <div class="flyer-card">
+        <img class="thumb" src="marketing/thumbs/flyer-portrait.png" alt="Flyer retrato do Fala Comigo" loading="lazy" width="640">
+        <div class="fname">Retrato</div>
+        <div class="fmeta">1080×1350 · Feed do Instagram/Facebook</div>
+        <a class="flyer-dl" href="marketing/flyer-portrait.png" download>⬇️ Baixar</a>
+      </div>
+      <div class="flyer-card">
+        <img class="thumb" src="marketing/thumbs/flyer-story.png" alt="Flyer para Stories do Fala Comigo" loading="lazy" width="640">
+        <div class="fname">Stories / Reels</div>
+        <div class="fmeta">1080×1920 · Stories do Instagram/Facebook</div>
+        <a class="flyer-dl" href="marketing/flyer-story.png" download>⬇️ Baixar</a>
+      </div>
+      <div class="flyer-card">
+        <img class="thumb" src="marketing/thumbs/flyer-landscape.png" alt="Flyer paisagem do Fala Comigo" loading="lazy" width="640">
+        <div class="fname">Paisagem</div>
+        <div class="fmeta">1200×630 · LinkedIn, Facebook (banner/link)</div>
+        <a class="flyer-dl" href="marketing/flyer-landscape.png" download>⬇️ Baixar</a>
+      </div>
+      <div class="flyer-card">
+        <img class="thumb" src="marketing/thumbs/flyer-square-alt.png" alt="Flyer quadrado (variante verde-água) do Fala Comigo" loading="lazy" width="640">
+        <div class="fname">Quadrado · variante</div>
+        <div class="fmeta">1080×1080 · paleta verde-água</div>
+        <a class="flyer-dl" href="marketing/flyer-square-alt.png" download>⬇️ Baixar</a>
+      </div>
+    </div>
+
+    <details class="faq"><summary>✍️ Legenda pronta para copiar</summary><p>💬 <strong>Conheça o Fala Comigo!</strong><br>
+    Um aplicativo gratuito que dá voz a quem se comunica de formas diferentes. A pessoa toca nos símbolos e o app fala em voz alta. 🗣️<br><br>
+    🔊 Fala em Português · 🧩 Pranchas com pictogramas · ✏️ Personalizável · 📲 Funciona offline · 🔒 Sem anúncios<br><br>
+    💜 Acesse e compartilhe: <strong>falafala.com.br</strong><br>
+    #CAA #ComunicaçãoAlternativa #Inclusão #Autismo #Fonoaudiologia #FalaComigo</p></details>
+
+    <div class="tip"><span class="ico">💡</span><span>Ao compartilhar nos Stories, use a figurinha de <strong>link</strong> apontando para <strong>falafala.com.br</strong> para facilitar o acesso.</span></div>
+
+    <p style="font-size:13px;color:var(--text-muted);">As artes podem ser usadas livremente para divulgar o app. O nome e o logotipo “Fala Comigo” pertencem ao autor — use-os apenas para divulgar o próprio aplicativo, sem alterações que confundam os usuários.</p>
   </section>
 
   <!-- ───────────────────────── CRÉDITOS ───────────────────────── -->
